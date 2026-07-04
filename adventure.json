@@ -21,7 +21,33 @@
         "Sono Lumi. Missione 1 rilevata!",
         "Osservate con calma. Le cose importanti non urlano, brillano piano.",
         "Quando siete sicure, scattate la foto e lasciate fare alla magia."
-      ]
+      ],
+      "item": {
+        "name": "Mappa dei Ricordi",
+        "description": "Aiuta Lumi a ordinare i segnali dispersi."
+      },
+      "dialogues": {
+        "start": [
+          "🏫 Missione 1 rilevata.",
+          "Ho trovato una traccia luminosa qui vicino.",
+          "Occhi aperti, cuore leggero, bici pronte."
+        ],
+        "success_fast": [
+          "Wow! L'avete trovata in un lampo!",
+          "Occhio di falco confermato.",
+          "Questa finisce nel diario delle imprese leggendarie."
+        ],
+        "success_slow": [
+          "Ci avete messo un po', ma i veri esploratori non mollano.",
+          "La pazienza è una superpotenza silenziosa.",
+          "Missione recuperata con stile."
+        ],
+        "fail": [
+          "Mmm... non ne sono convinta.",
+          "Provate ad avvicinarvi al dettaglio.",
+          "Respirate, osservate, riprovate."
+        ]
+      }
     },
     {
       "id": 2,
@@ -42,7 +68,33 @@
         "Sono Lumi. Missione 2 rilevata!",
         "Osservate con calma. Le cose importanti non urlano, brillano piano.",
         "Quando siete sicure, scattate la foto e lasciate fare alla magia."
-      ]
+      ],
+      "item": {
+        "name": "Corda del Ponte",
+        "description": "Serve per attraversare simbolicamente il passaggio."
+      },
+      "dialogues": {
+        "start": [
+          "🌉 Missione 2 rilevata.",
+          "Ho trovato una traccia luminosa qui vicino.",
+          "Occhi aperti, cuore leggero, bici pronte."
+        ],
+        "success_fast": [
+          "Wow! L'avete trovata in un lampo!",
+          "Occhio di falco confermato.",
+          "Questa finisce nel diario delle imprese leggendarie."
+        ],
+        "success_slow": [
+          "Ci avete messo un po', ma i veri esploratori non mollano.",
+          "La pazienza è una superpotenza silenziosa.",
+          "Missione recuperata con stile."
+        ],
+        "fail": [
+          "Mmm... non ne sono convinta.",
+          "Provate ad avvicinarvi al dettaglio.",
+          "Respirate, osservate, riprovate."
+        ]
+      }
     },
     {
       "id": 3,
@@ -63,7 +115,33 @@
         "Sono Lumi. Missione 3 rilevata!",
         "Osservate con calma. Le cose importanti non urlano, brillano piano.",
         "Quando siete sicure, scattate la foto e lasciate fare alla magia."
-      ]
+      ],
+      "item": {
+        "name": "Bussola dell'Anello",
+        "description": "Sblocca la lettura delle direzioni."
+      },
+      "dialogues": {
+        "start": [
+          "🪧 Missione 3 rilevata.",
+          "Ho trovato una traccia luminosa qui vicino.",
+          "Occhi aperti, cuore leggero, bici pronte."
+        ],
+        "success_fast": [
+          "Wow! L'avete trovata in un lampo!",
+          "Occhio di falco confermato.",
+          "Questa finisce nel diario delle imprese leggendarie."
+        ],
+        "success_slow": [
+          "Ci avete messo un po', ma i veri esploratori non mollano.",
+          "La pazienza è una superpotenza silenziosa.",
+          "Missione recuperata con stile."
+        ],
+        "fail": [
+          "Mmm... non ne sono convinta.",
+          "Provate ad avvicinarvi al dettaglio.",
+          "Respirate, osservate, riprovate."
+        ]
+      }
     },
     {
       "id": 4,
@@ -84,7 +162,33 @@
         "Sono Lumi. Missione 4 rilevata!",
         "Osservate con calma. Le cose importanti non urlano, brillano piano.",
         "Quando siete sicure, scattate la foto e lasciate fare alla magia."
-      ]
+      ],
+      "item": {
+        "name": "Medaglia dell'Amicizia",
+        "description": "Apre i ricordi legati agli amici speciali."
+      },
+      "dialogues": {
+        "start": [
+          "🐶 Missione 4 rilevata.",
+          "Ho trovato una traccia luminosa qui vicino.",
+          "Occhi aperti, cuore leggero, bici pronte."
+        ],
+        "success_fast": [
+          "Wow! L'avete trovata in un lampo!",
+          "Occhio di falco confermato.",
+          "Questa finisce nel diario delle imprese leggendarie."
+        ],
+        "success_slow": [
+          "Ci avete messo un po', ma i veri esploratori non mollano.",
+          "La pazienza è una superpotenza silenziosa.",
+          "Missione recuperata con stile."
+        ],
+        "fail": [
+          "Mmm... non ne sono convinta.",
+          "Provate ad avvicinarvi al dettaglio.",
+          "Respirate, osservate, riprovate."
+        ]
+      }
     },
     {
       "id": 5,
@@ -105,7 +209,33 @@
         "Sono Lumi. Missione 5 rilevata!",
         "Osservate con calma. Le cose importanti non urlano, brillano piano.",
         "Quando siete sicure, scattate la foto e lasciate fare alla magia."
-      ]
+      ],
+      "item": {
+        "name": "Lanterna del Passaggio",
+        "description": "Illumina le missioni misteriose."
+      },
+      "dialogues": {
+        "start": [
+          "⚠️ Missione 5 rilevata.",
+          "Ho trovato una traccia luminosa qui vicino.",
+          "Occhi aperti, cuore leggero, bici pronte."
+        ],
+        "success_fast": [
+          "Wow! L'avete trovata in un lampo!",
+          "Occhio di falco confermato.",
+          "Questa finisce nel diario delle imprese leggendarie."
+        ],
+        "success_slow": [
+          "Ci avete messo un po', ma i veri esploratori non mollano.",
+          "La pazienza è una superpotenza silenziosa.",
+          "Missione recuperata con stile."
+        ],
+        "fail": [
+          "Mmm... non ne sono convinta.",
+          "Provate ad avvicinarvi al dettaglio.",
+          "Respirate, osservate, riprovate."
+        ]
+      }
     },
     {
       "id": 6,
@@ -127,7 +257,33 @@
         "Sono Lumi. Missione 6 rilevata!",
         "Osservate con calma. Le cose importanti non urlano, brillano piano.",
         "Quando siete sicure, scattate la foto e lasciate fare alla magia."
-      ]
+      ],
+      "item": {
+        "name": "Seme del Rispetto",
+        "description": "Rende più forte il Guardiano del Bosco."
+      },
+      "dialogues": {
+        "start": [
+          "🌿 Missione 6 rilevata.",
+          "Ho trovato una traccia luminosa qui vicino.",
+          "Occhi aperti, cuore leggero, bici pronte."
+        ],
+        "success_fast": [
+          "Wow! L'avete trovata in un lampo!",
+          "Occhio di falco confermato.",
+          "Questa finisce nel diario delle imprese leggendarie."
+        ],
+        "success_slow": [
+          "Ci avete messo un po', ma i veri esploratori non mollano.",
+          "La pazienza è una superpotenza silenziosa.",
+          "Missione recuperata con stile."
+        ],
+        "fail": [
+          "Mmm... non ne sono convinta.",
+          "Provate ad avvicinarvi al dettaglio.",
+          "Respirate, osservate, riprovate."
+        ]
+      }
     },
     {
       "id": 7,
@@ -149,7 +305,33 @@
         "Sono Lumi. Missione 7 rilevata!",
         "Osservate con calma. Le cose importanti non urlano, brillano piano.",
         "Quando siete sicure, scattate la foto e lasciate fare alla magia."
-      ]
+      ],
+      "item": {
+        "name": "Goccia d'Energia",
+        "description": "Ricarica le esploratrici."
+      },
+      "dialogues": {
+        "start": [
+          "💧 Missione 7 rilevata.",
+          "Ho trovato una traccia luminosa qui vicino.",
+          "Occhi aperti, cuore leggero, bici pronte."
+        ],
+        "success_fast": [
+          "Wow! L'avete trovata in un lampo!",
+          "Occhio di falco confermato.",
+          "Questa finisce nel diario delle imprese leggendarie."
+        ],
+        "success_slow": [
+          "Ci avete messo un po', ma i veri esploratori non mollano.",
+          "La pazienza è una superpotenza silenziosa.",
+          "Missione recuperata con stile."
+        ],
+        "fail": [
+          "Mmm... non ne sono convinta.",
+          "Provate ad avvicinarvi al dettaglio.",
+          "Respirate, osservate, riprovate."
+        ]
+      }
     },
     {
       "id": 8,
@@ -171,7 +353,33 @@
         "Sono Lumi. Missione 8 rilevata!",
         "Osservate con calma. Le cose importanti non urlano, brillano piano.",
         "Quando siete sicure, scattate la foto e lasciate fare alla magia."
-      ]
+      ],
+      "item": {
+        "name": "Pagina Curiosa",
+        "description": "Apre le storie nascoste."
+      },
+      "dialogues": {
+        "start": [
+          "📚 Missione 8 rilevata.",
+          "Ho trovato una traccia luminosa qui vicino.",
+          "Occhi aperti, cuore leggero, bici pronte."
+        ],
+        "success_fast": [
+          "Wow! L'avete trovata in un lampo!",
+          "Occhio di falco confermato.",
+          "Questa finisce nel diario delle imprese leggendarie."
+        ],
+        "success_slow": [
+          "Ci avete messo un po', ma i veri esploratori non mollano.",
+          "La pazienza è una superpotenza silenziosa.",
+          "Missione recuperata con stile."
+        ],
+        "fail": [
+          "Mmm... non ne sono convinta.",
+          "Provate ad avvicinarvi al dettaglio.",
+          "Respirate, osservate, riprovate."
+        ]
+      }
     },
     {
       "id": 9,
@@ -192,10 +400,36 @@
         "Sono Lumi. Missione 9 rilevata!",
         "Osservate con calma. Le cose importanti non urlano, brillano piano.",
         "Quando siete sicure, scattate la foto e lasciate fare alla magia."
-      ]
+      ],
+      "item": {
+        "name": "Chiave d'Argento",
+        "description": "Sblocca la Missione Segreta finale."
+      },
+      "dialogues": {
+        "start": [
+          "🏡 Missione 9 rilevata.",
+          "Ho trovato una traccia luminosa qui vicino.",
+          "Occhi aperti, cuore leggero, bici pronte."
+        ],
+        "success_fast": [
+          "Wow! L'avete trovata in un lampo!",
+          "Occhio di falco confermato.",
+          "Questa finisce nel diario delle imprese leggendarie."
+        ],
+        "success_slow": [
+          "Ci avete messo un po', ma i veri esploratori non mollano.",
+          "La pazienza è una superpotenza silenziosa.",
+          "Missione recuperata con stile."
+        ],
+        "fail": [
+          "Mmm... non ne sono convinta.",
+          "Provate ad avvicinarvi al dettaglio.",
+          "Respirate, osservate, riprovate."
+        ]
+      }
     }
   ],
-  "version": "5.0",
+  "version": "6.0",
   "mascot": {
     "name": "Lumi",
     "emoji": "🦊",
@@ -241,5 +475,23 @@
     "Le foto principali sono i dettagli numerati 1-9 caricati dall'utente.",
     "Le foto grandangolari si aprono solo tramite Aiutino.",
     "Cache aggiornata a v5."
-  ]
+  ],
+  "engine": {
+    "name": "FamilyQuest Engine",
+    "features": [
+      "editor",
+      "dialoghi ramificati",
+      "inventario utile",
+      "achievement",
+      "diario finale",
+      "eventi casuali"
+    ]
+  },
+  "secretMission": {
+    "id": 10,
+    "title": "La Porta Nascosta",
+    "requiredItem": "Chiave d'Argento",
+    "description": "Missione segreta sbloccata solo dopo aver raccolto tutti gli oggetti.",
+    "reward": "Corona delle Esploratrici"
+  }
 }

@@ -1,25 +1,28 @@
-# FamilyQuest — Retrone Memories v5
+# FamilyQuest — Retrone Memories v6
 
-## Correzione importante v5
+## Novità v6 — FamilyQuest Engine
 
-Questa versione usa come immagini principali delle missioni le 9 foto dettaglio numerate dall'utente:
+- Editor visuale base per creare nuove avventure ed esportare JSON
+- Dialoghi ramificati per Lumi
+- Inventario più utile con oggetti missione
+- Achievement / Trofei
+- Diario finale con foto e storia
+- Eventi casuali durante il gioco
 
-- `m1-detail.png`
-- `m2-detail.png`
-- ...
-- `m9-detail.png`
+## Nota editor
 
-Le foto grandangolari restano disponibili solo premendo **Aiutino**.
+L'editor v6 è una prima base: permette di generare JSON e scaricare il diario. Nelle prossime versioni può diventare un editor completo con drag & drop immagini.
 
-## Dopo il caricamento su GitHub
+## Musica
 
-Se sull'iPhone vedi ancora immagini vecchie:
+Per aggiungere musica reale, crea una cartella `assets/audio/` e usa file MP3 o OGG loopabili.
+Consigli:
+- menu: 60-120 sec
+- esplorazione: 2-4 min
+- mistero: 45-90 sec
+- successo: 5-10 sec
+- finale: 30-60 sec
 
-1. Apri il sito in Safari.
-2. Ricarica la pagina.
-3. Se hai già aggiunto l'app alla schermata Home, rimuovila e aggiungila di nuovo.
-4. In caso estremo: Impostazioni iPhone → Safari → Cancella dati siti web per `github.io`.
+## GitHub Pages
 
-## Nota riconoscimento foto
-
-Il riconoscimento attuale è locale e non usa server. È più severo della versione precedente, ma non è ancora un vero modello IA TensorFlow.js.
+Carica tutto nella root del repository.

@@ -31,3 +31,19 @@
 .help-card img{object-fit:cover}
 
 /* v5: main mission image is always the numbered detail uploaded by user */
+
+
+/* FamilyQuest v6 Engine */
+.editor-area textarea,.editor-area input{width:100%;border:1px solid rgba(255,255,255,.16);background:rgba(0,0,0,.25);color:white;border-radius:16px;padding:12px;margin:6px 0;font:inherit}
+.editor-area label{font-size:12px;color:var(--muted);font-weight:800;text-transform:uppercase;letter-spacing:.08em}
+.file-drop{border:2px dashed rgba(255,255,255,.22);border-radius:22px;padding:18px;text-align:center;background:rgba(255,255,255,.07);margin:10px 0}
+.achievement{display:flex;gap:12px;align-items:center;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.08);border-radius:20px;padding:12px;margin:8px 0}
+.achievement .medal{font-size:30px;width:48px;height:48px;display:grid;place-items:center;border-radius:16px;background:rgba(255,209,102,.16)}
+.achievement.locked{opacity:.42;filter:grayscale(1)}
+.dialogue-choice{display:grid;gap:10px;margin-top:14px}
+.diary-page{background:rgba(255,255,255,.92);color:#160d2f;border-radius:24px;padding:18px;margin:12px 0;box-shadow:0 15px 45px rgba(0,0,0,.28)}
+.diary-page img{width:100%;max-height:260px;object-fit:cover;border-radius:18px;margin:8px 0}
+.random-event{position:fixed;inset:0;display:grid;place-items:center;background:rgba(5,7,22,.90);z-index:95;padding:18px}
+.random-event .card{max-width:560px;text-align:center}
+.badge-row{display:flex;gap:8px;flex-wrap:wrap}.badge-pill{padding:8px 10px;border-radius:999px;background:rgba(255,255,255,.10);border:1px solid rgba(255,255,255,.16);font-size:13px;font-weight:800}
+.export-box{white-space:pre-wrap;max-height:280px;overflow:auto;background:rgba(0,0,0,.35);border-radius:16px;padding:12px;border:1px solid rgba(255,255,255,.12);font-size:12px}

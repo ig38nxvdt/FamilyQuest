@@ -2,7 +2,7 @@
 const $ = s => document.querySelector(s);
 const app = $('#app');
 const cameraInput = $('#cameraInput');
-const saveKey = 'familyquest-retrone-v5';
+const saveKey = 'familyquest-retrone-v6';
 
 let adventure = null;
 let view = 'home';
@@ -20,7 +20,7 @@ const defaultState = {
   secretsUnlocked:[],
   bonusRewards:[],
   audioOn:false,
-  recognitionMode:'auto'
+  recognitionMode:'auto', assists:0, missionStart:{}, randomEventsSeen:[], createdAdventure:null
 };
 let state = loadState();
 
@@ -35,13 +35,13 @@ function currentMission(){ return adventure.missions.find(m=>m.id===state.curren
 const imgExt = {1:{detail:'png',wide:'png'},2:{detail:'png',wide:'jpg'},3:{detail:'png',wide:'png'},4:{detail:'png',wide:'png'},5:{detail:'png',wide:'png'},6:{detail:'png',wide:'png'},7:{detail:'png',wide:'png'},8:{detail:'png',wide:'png'},9:{detail:'png',wide:'png'}};
 
 function missionImg(m,type='detail'){
-  return `assets/missions/m${m.id}-${type}.${imgExt[m.id][type]}?v=5`;
+  return `assets/missions/m${m.id}-${type}.${imgExt[m.id][type]}?v=6`;
 }
 function vibrate(ms=60){ try{ navigator.vibrate && navigator.vibrate(ms); }catch{} }
 
 async function init(){
-  adventure = await fetch('adventure.json?v=5').then(r=>r.json());
-  if('serviceWorker' in navigator) navigator.serviceWorker.register('./service-worker.js?v=5').catch(()=>{});
+  adventure = await fetch('adventure.json?v=6').then(r=>r.json());
+  if('serviceWorker' in navigator) navigator.serviceWorker.register('./service-worker.js?v=6').catch(()=>{});
   createParticles();
   render();
 }
@@ -96,7 +96,7 @@ function testSound(){ ensureAudio(); state.audioOn=true; save(); startMusicLoop(
 
 function shell(content){
   return `<div class="topbar">
-    <div class="brand"><div class="logo">🗝️</div><div><div class="kicker">FamilyQuest v5</div><b>${adventure.adventureTitle}</b></div></div>
+    <div class="brand"><div class="logo">🗝️</div><div><div class="kicker">FamilyQuest v6</div><b>${adventure.adventureTitle}</b></div></div>
     <button class="btn ghost" onclick="reset()">Reset</button>
   </div>${content}${nav()}`;
 }
@@ -104,9 +104,10 @@ function nav(){
   if(!state.started) return '';
   return `<div class="nav">
     <button class="${view==='mission'?'active':''}" onclick="view='mission';render()">Missione</button>
-    <button class="${view==='inventory'?'active':''}" onclick="view='inventory';render()">Inventario</button>
-    <button class="${view==='album'?'active':''}" onclick="view='album';render()">Album</button>
-    <button class="${view==='settings'?'active':''}" onclick="view='settings';render()">Opzioni</button>
+    <button class="${view==='inventory'?'active':''}" onclick="view='inventory';render()">Zaino</button>
+    <button class="${view==='achievements'?'active':''}" onclick="view='achievements';render()">Trofei</button>
+    <button class="${view==='diary'?'active':''}" onclick="view='diary';render()">Diario</button>
+    <button class="${view==='editor'?'active':''}" onclick="view='editor';render()">Editor</button>
   </div>`;
 }
 function mascot(text){
@@ -134,18 +135,22 @@ function render(){
   if(view==='inventory') app.innerHTML=shell(inventory());
   else if(view==='album') app.innerHTML=shell(album());
   else if(view==='settings') app.innerHTML=shell(settings());
+  else if(view==='achievements') app.innerHTML=shell(achievements());
+  else if(view==='diary') app.innerHTML=shell(diary());
+  else if(view==='editor') app.innerHTML=shell(editor());
   else app.innerHTML=shell(mission());
 }
 function mission(){
   const m=currentMission(), done=state.completed.length, pct=Math.round(done/adventure.missions.length*100);
   if(done===adventure.missions.length) return finale();
+  if(!state.missionStart[m.id]){state.missionStart[m.id]=Date.now();save();}
   return `<section class="grid">
     <div class="card">
       <div class="mission-head"><div class="mission-icon">${m.icon}</div><div><div class="kicker">Missione ${m.id}/9</div><h2>${m.title}</h2></div></div>
       <img class="mission-img" src="${missionImg(m,'detail')}" alt="Dettaglio da fotografare" onerror="this.style.display='none'">
       <p class="small">🎯 Questa è la foto dettaglio: è l'obiettivo da trovare e fotografare.</p>
       <div class="story-card">📖 ${m.story || m.intro}</div>
-      ${mascot((m.guide && m.guide[1]) || 'Osservate bene e cercate il segnale giusto.')}
+      ${mascot((m.dialogues?.start?.[1]) || (m.guide && m.guide[1]) || 'Osservate bene e cercate il segnale giusto.')}
       <p class="clue">${m.clue}</p>
       ${m.bonus?`<p class="small">✨ ${m.bonus}</p>`:''}
       <div class="actions">
@@ -171,7 +176,7 @@ function mission(){
     </div>
   </section>`;
 }
-function showHelp(id){
+function showHelp(id){ state.assists=(state.assists||0)+1; save();
   const m=adventure.missions.find(x=>x.id===id);
   document.body.insertAdjacentHTML('beforeend', `<div class="help-modal" onclick="if(event.target.className==='help-modal')this.remove()">
     <div class="card help-card">
@@ -279,13 +284,13 @@ function completeMission(id, score=0.75){
     state.xp += m.xp;
     state.level = levelForXP(state.xp);
     state.current = Math.min(id+1, adventure.missions.length+1);
-    save(); vibrate(120); successSound();
+    save(); vibrate(120); successSound(); maybeRandomEvent();
   }
   app.insertAdjacentHTML('beforeend', `<div class="reward"><div class="reward-card">
     <div class="reward-icon">🗝️</div>
     <div class="kicker">Missione completata</div>
     <h2>${m.success}</h2>
-    <p><b>${m.key}</b><br>✨ ${m.fragment}<br>🏅 ${m.badge}<br>🎁 Premio casuale: ${bonus}<br>🔐 Lettera segreta: ${m.secretLetter || '★'}<br>+${m.xp} XP</p>
+    <p><b>${m.key}</b><br>✨ ${m.fragment}<br>🏅 ${m.badge}<br>🎒 Oggetto: ${m.item?.name || 'Oggetto misterioso'}<br>🎁 Premio casuale: ${bonus}<br>🔐 Lettera segreta: ${m.secretLetter || '★'}<br>+${m.xp} XP</p>
     ${state.level>oldLevel?`<p class="levelup">LEVEL UP! Livello ${state.level}: ${levelName(state.level)}</p>`:''}
     <p class="small">Scanner locale: ${(score*100|0)}%</p>
     <button class="btn" onclick="document.querySelector('.reward').remove(); render()">Continua</button>
@@ -340,4 +345,93 @@ function finale(){
     <div class="actions"><button class="btn" onclick="view='album';render()">Apri album</button><button class="btn secondary" onclick="view='inventory';render()">Vedi inventario</button></div>
   </div></section>`;
 }
+
+function maybeRandomEvent(){
+  if(Math.random() > 0.28) return;
+  const events=[
+    {id:'pose', title:'Sfida di Lumi', text:'Fate una posa da esploratrici per 5 secondi.', reward:'Scintilla Buffa', xp:25},
+    {id:'count', title:'Occhi Aperti', text:'Contate tre cose blu vicino a voi.', reward:'Occhio di Falco', xp:25},
+    {id:'team', title:'Modalità Squadra', text:'Inventate un nome per la vostra squadra di oggi.', reward:'Sigillo Squadra', xp:30},
+    {id:'silence', title:'Ascolto Segreto', text:'Restate in silenzio 10 secondi e ascoltate il parco.', reward:'Eco Gentile', xp:30}
+  ];
+  const ev=events[Math.floor(Math.random()*events.length)];
+  if(state.randomEventsSeen.includes(ev.id)) return;
+  state.randomEventsSeen.push(ev.id); state.xp+=ev.xp; state.bonusRewards.push({mission:'event', reward:ev.reward}); state.level=levelForXP(state.xp); save();
+  setTimeout(()=>document.body.insertAdjacentHTML('beforeend',`<div class="random-event"><div class="card">
+    <div class="hero-icon">🎲</div><div class="kicker">Evento casuale</div><h2>${ev.title}</h2><p class="subtitle">${ev.text}</p>
+    <p>🎁 ${ev.reward}<br>+${ev.xp} XP</p>
+    <button class="btn" onclick="document.querySelector('.random-event').remove()">Fatto!</button>
+  </div></div>`),800);
+}
+function getAchievements(){
+  const done=state.completed.length;
+  const photos=Object.keys(state.photos||{}).length;
+  const noHelp=(state.assists||0)===0 && done>=9;
+  const allDone=done>=9;
+  const secrets=(state.secretsUnlocked||[]).length;
+  return [
+    {id:'first', icon:'🌟', name:'Prima Scintilla', desc:'Completa la prima missione.', ok:done>=1},
+    {id:'all', icon:'🏆', name:'Retrone Master', desc:'Completa tutte le 9 missioni.', ok:allDone},
+    {id:'photos', icon:'📸', name:'Fotografe Ufficiali', desc:'Scatta 9 foto nell’album.', ok:photos>=9},
+    {id:'nohelp', icon:'🦅', name:'Occhio di Falco', desc:'Completa tutto senza aiutini.', ok:noHelp},
+    {id:'codes', icon:'🔐', name:'Decifratrici', desc:'Sblocca almeno un codice segreto.', ok:secrets>=1},
+    {id:'events', icon:'🎲', name:'Imprevisti? Presi!', desc:'Completa un evento casuale.', ok:(state.randomEventsSeen||[]).length>=1},
+    {id:'level5', icon:'👑', name:'Maestre dei Ricordi', desc:'Raggiungi il livello 5.', ok:state.level>=5}
+  ];
+}
+function achievements(){
+  const list=getAchievements();
+  return `<section class="grid"><div class="card"><div class="kicker">Achievement</div><h2>Trofei</h2>${mascot('I trofei sono ricordi con una medaglia addosso. Molto eleganti, modestamente.')}</div>
+  <div class="card">${list.map(a=>`<div class="achievement ${a.ok?'':'locked'}"><div class="medal">${a.icon}</div><div><b>${a.name}</b><p class="small">${a.desc}</p></div></div>`).join('')}</div></section>`;
+}
+function diary(){
+  const pages=adventure.missions.map(m=>{
+    const photo=state.photos[m.id] ? `<img src="${state.photos[m.id]}">` : '';
+    const done=completed(m);
+    return `<div class="diary-page"><h3>${m.id}. ${m.title}</h3>${photo}<p>${m.story||m.intro}</p><p><b>Ricompensa:</b> ${done ? (m.item?.name || m.key) : 'Non ancora trovata'}</p></div>`;
+  }).join('');
+  const html=`<section class="grid"><div class="card"><div class="kicker">Album dei Ricordi</div><h2>Diario finale</h2>${mascot('Quando la missione finisce, il diario resta. È il tesoro che non si perde sotto il divano.')}</div>${pages}</section>`;
+  return html;
+}
+function downloadDiary(){
+  const html='<!doctype html><html><head><meta charset="utf-8"><title>Diario FamilyQuest</title></head><body>'+diary()+'</body></html>';
+  const blob=new Blob([html],{type:'text/html'});
+  const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download='diario-familyquest.html'; a.click();
+}
+function editor(){
+  const current=JSON.stringify(adventure,null,2);
+  return `<section class="grid editor-area">
+    <div class="card"><div class="kicker">Editor visuale</div><h2>Crea nuova avventura</h2>
+    ${mascot('Qui puoi preparare una nuova avventura senza toccare il codice. Per ora esporta un JSON: nella prossima versione lo renderemo ancora più comodo.')}
+    <label>Titolo avventura</label><input id="edTitle" value="Nuova Avventura">
+    <label>Nome missione</label><input id="edMissionTitle" value="Missione Segreta">
+    <label>Indizio</label><textarea id="edClue">Cercate un luogo speciale e fotografate il dettaglio nascosto.</textarea>
+    <label>Dialogo Lumi</label><textarea id="edDialogue">Ho trovato una nuova traccia. Questa profuma di mistero!</textarea>
+    <div class="file-drop">📷 In futuro qui trascinerai foto dettaglio e foto aiutino.<br><span class="small">Versione attuale: editor JSON base.</span></div>
+    <button class="btn" onclick="exportAdventure()">Genera JSON</button>
+    <button class="btn secondary" onclick="downloadDiary()">Scarica diario HTML</button>
+    <div id="exportOut" class="export-box" style="display:none"></div>
+    </div>
+    <div class="card"><h3>Motore attuale</h3><div class="export-box">${current.replace(/[<>&]/g,c=>({'<':'&lt;','>':'&gt;','&':'&amp;'}[c]))}</div></div>
+  </section>`;
+}
+function exportAdventure(){
+  const obj={
+    appName:'FamilyQuest',
+    adventureTitle:$('#edTitle').value,
+    missions:[{
+      id:1,
+      title:$('#edMissionTitle').value,
+      icon:'✨',
+      clue:$('#edClue').value,
+      dialogues:{start:[$('#edDialogue').value]},
+      key:'Chiave Nuova',
+      fragment:'Frammento Nuovo',
+      badge:'Nuova Impresa',
+      xp:100
+    }]
+  };
+  const out=$('#exportOut'); out.style.display='block'; out.textContent=JSON.stringify(obj,null,2);
+}
+
 init();
