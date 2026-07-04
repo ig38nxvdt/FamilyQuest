@@ -2,7 +2,7 @@
 const $ = s => document.querySelector(s);
 const app = $('#app');
 const cameraInput = $('#cameraInput');
-const saveKey = 'familyquest-retrone-v4';
+const saveKey = 'familyquest-retrone-v5';
 
 let adventure = null;
 let view = 'home';
@@ -35,13 +35,13 @@ function currentMission(){ return adventure.missions.find(m=>m.id===state.curren
 const imgExt = {1:{detail:'png',wide:'png'},2:{detail:'png',wide:'jpg'},3:{detail:'png',wide:'png'},4:{detail:'png',wide:'png'},5:{detail:'png',wide:'png'},6:{detail:'png',wide:'png'},7:{detail:'png',wide:'png'},8:{detail:'png',wide:'png'},9:{detail:'png',wide:'png'}};
 
 function missionImg(m,type='detail'){
-  return `assets/missions/m${m.id}-${type}.${imgExt[m.id][type]}?v=4`;
+  return `assets/missions/m${m.id}-${type}.${imgExt[m.id][type]}?v=5`;
 }
 function vibrate(ms=60){ try{ navigator.vibrate && navigator.vibrate(ms); }catch{} }
 
 async function init(){
-  adventure = await fetch('adventure.json?v=4').then(r=>r.json());
-  if('serviceWorker' in navigator) navigator.serviceWorker.register('./service-worker.js?v=4').catch(()=>{});
+  adventure = await fetch('adventure.json?v=5').then(r=>r.json());
+  if('serviceWorker' in navigator) navigator.serviceWorker.register('./service-worker.js?v=5').catch(()=>{});
   createParticles();
   render();
 }
@@ -96,7 +96,7 @@ function testSound(){ ensureAudio(); state.audioOn=true; save(); startMusicLoop(
 
 function shell(content){
   return `<div class="topbar">
-    <div class="brand"><div class="logo">🗝️</div><div><div class="kicker">FamilyQuest v4</div><b>${adventure.adventureTitle}</b></div></div>
+    <div class="brand"><div class="logo">🗝️</div><div><div class="kicker">FamilyQuest v5</div><b>${adventure.adventureTitle}</b></div></div>
     <button class="btn ghost" onclick="reset()">Reset</button>
   </div>${content}${nav()}`;
 }

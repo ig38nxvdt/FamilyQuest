@@ -1,4 +1,4 @@
-const CACHE_NAME='familyquest-v4';
+const CACHE_NAME='familyquest-v5';
 const ASSETS=[
  './','./index.html','./style.css','./app.js','./adventure.json','./manifest.webmanifest','./assets/icons/icon.svg',
  './assets/missions/m1-detail.png','./assets/missions/m1-wide.png',

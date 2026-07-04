@@ -1,24 +1,25 @@
-# FamilyQuest — Retrone Memories v4
+# FamilyQuest — Retrone Memories v5
 
-## Correzioni v4
+## Correzione importante v5
 
-- Foto principale di ogni missione: dettaglio da fotografare.
-- Tasto Aiutino: apre solo la foto grandangolare.
-- Cache aggiornata a v4 per evitare che GitHub Pages/iPhone mostrino la vecchia versione.
-- Scanner foto più severo in modalità automatica.
-- Modalità assistita disponibile dalle Opzioni.
-- Le immagini hanno `?v=4` per forzare aggiornamento.
+Questa versione usa come immagini principali delle missioni le 9 foto dettaglio numerate dall'utente:
 
-## Riconoscimento foto
+- `m1-detail.png`
+- `m2-detail.png`
+- ...
+- `m9-detail.png`
 
-Questa versione usa un controllo locale migliorato:
-- istogramma colore
-- hash luminosità
-- controllo crop centrale
+Le foto grandangolari restano disponibili solo premendo **Aiutino**.
 
-Non usa server. Non è ancora AI vera con TensorFlow.js: quella sarà la prossima versione se vuoi il salto serio.
+## Dopo il caricamento su GitHub
 
-## GitHub Pages
+Se sull'iPhone vedi ancora immagini vecchie:
 
-Carica tutti i file nella root del repository. Dopo il commit, su iPhone apri il sito e se vedi ancora vecchie immagini fai:
-Safari → ricarica pagina, oppure rimuovi e riaggiungi l’app dalla schermata Home.
+1. Apri il sito in Safari.
+2. Ricarica la pagina.
+3. Se hai già aggiunto l'app alla schermata Home, rimuovila e aggiungila di nuovo.
+4. In caso estremo: Impostazioni iPhone → Safari → Cancella dati siti web per `github.io`.
+
+## Nota riconoscimento foto
+
+Il riconoscimento attuale è locale e non usa server. È più severo della versione precedente, ma non è ancora un vero modello IA TensorFlow.js.

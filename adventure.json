@@ -195,7 +195,7 @@
       ]
     }
   ],
-  "version": "4.0",
+  "version": "5.0",
   "mascot": {
     "name": "Lumi",
     "emoji": "🦊",
@@ -236,5 +236,10 @@
   "recognition": {
     "mode": "ai-lite",
     "description": "Riconoscimento locale con controllo immagine assistito e cache pulita. Preparato per AI browser."
-  }
+  },
+  "fixes": [
+    "Le foto principali sono i dettagli numerati 1-9 caricati dall'utente.",
+    "Le foto grandangolari si aprono solo tramite Aiutino.",
+    "Cache aggiornata a v5."
+  ]
 }

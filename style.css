@@ -29,3 +29,5 @@
 /* v4: dettaglio principale più leggibile */
 .mission-img{object-fit:contain;background:rgba(0,0,0,.25);max-height:360px}
 .help-card img{object-fit:cover}
+
+/* v5: main mission image is always the numbered detail uploaded by user */
