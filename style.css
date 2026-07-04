@@ -25,3 +25,7 @@
 .switch.on i{left:32px}
 .code-help{background:rgba(56,189,248,.10);border:1px solid rgba(56,189,248,.20);border-radius:20px;padding:14px;margin-top:12px}
 .scan-choice{display:grid;gap:10px;margin-top:12px}
+
+/* v4: dettaglio principale più leggibile */
+.mission-img{object-fit:contain;background:rgba(0,0,0,.25);max-height:360px}
+.help-card img{object-fit:cover}

@@ -195,7 +195,7 @@
       ]
     }
   ],
-  "version": "3.0",
+  "version": "4.0",
   "mascot": {
     "name": "Lumi",
     "emoji": "🦊",
@@ -232,5 +232,9 @@
   "howCodesWork": {
     "title": "Come funzionano i codici segreti",
     "text": "Ogni missione completata sblocca una lettera o un simbolo. Le prime sette lettere formano il codice RETRONE. Altri codici speciali sono LUMI e CASA."
+  },
+  "recognition": {
+    "mode": "ai-lite",
+    "description": "Riconoscimento locale con controllo immagine assistito e cache pulita. Preparato per AI browser."
   }
 }

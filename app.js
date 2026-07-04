@@ -2,7 +2,7 @@
 const $ = s => document.querySelector(s);
 const app = $('#app');
 const cameraInput = $('#cameraInput');
-const saveKey = 'familyquest-retrone-v3';
+const saveKey = 'familyquest-retrone-v4';
 
 let adventure = null;
 let view = 'home';
@@ -20,7 +20,7 @@ const defaultState = {
   secretsUnlocked:[],
   bonusRewards:[],
   audioOn:false,
-  recognitionMode:'assisted'
+  recognitionMode:'auto'
 };
 let state = loadState();
 
@@ -31,20 +31,23 @@ function levelForXP(xp){ if(xp>=1200) return 5; if(xp>=750) return 4; if(xp>=420
 function levelName(l){ return ['','Esploratrici','Viaggiatrici','Custodi','Archiviste','Maestre dei Ricordi'][l]; }
 function completed(m){ return state.completed.includes(m.id); }
 function currentMission(){ return adventure.missions.find(m=>m.id===state.current) || adventure.missions.at(-1); }
+
+const imgExt = {1:{detail:'png',wide:'png'},2:{detail:'png',wide:'jpg'},3:{detail:'png',wide:'png'},4:{detail:'png',wide:'png'},5:{detail:'png',wide:'png'},6:{detail:'png',wide:'png'},7:{detail:'png',wide:'png'},8:{detail:'png',wide:'png'},9:{detail:'png',wide:'png'}};
+
 function missionImg(m,type='detail'){
-  const ext={1:['png','png'],2:['png','jpg'],3:['png','png'],4:['png','png'],5:['png','png'],6:['png','png'],7:['png','png'],8:['png','png'],9:['png','png']};
-  return `assets/missions/m${m.id}-${type}.${type==='detail'?ext[m.id][0]:ext[m.id][1]}`;
+  return `assets/missions/m${m.id}-${type}.${imgExt[m.id][type]}?v=4`;
 }
 function vibrate(ms=60){ try{ navigator.vibrate && navigator.vibrate(ms); }catch{} }
 
 async function init(){
-  adventure = await fetch('adventure.json').then(r=>r.json());
-  if('serviceWorker' in navigator) navigator.serviceWorker.register('./service-worker.js').catch(()=>{});
+  adventure = await fetch('adventure.json?v=4').then(r=>r.json());
+  if('serviceWorker' in navigator) navigator.serviceWorker.register('./service-worker.js?v=4').catch(()=>{});
   createParticles();
   render();
 }
 
 function createParticles(){
+  if(document.querySelector('.particles')) return;
   const wrap=document.createElement('div');
   wrap.className='particles';
   for(let i=0;i<34;i++){
@@ -93,7 +96,7 @@ function testSound(){ ensureAudio(); state.audioOn=true; save(); startMusicLoop(
 
 function shell(content){
   return `<div class="topbar">
-    <div class="brand"><div class="logo">🗝️</div><div><div class="kicker">FamilyQuest</div><b>${adventure.adventureTitle}</b></div></div>
+    <div class="brand"><div class="logo">🗝️</div><div><div class="kicker">FamilyQuest v4</div><b>${adventure.adventureTitle}</b></div></div>
     <button class="btn ghost" onclick="reset()">Reset</button>
   </div>${content}${nav()}`;
 }
@@ -115,7 +118,7 @@ function home(){
     <div class="hero-icon">🚲✨</div>
     <div class="kicker">Prima avventura</div>
     <h1 class="title">${adventure.adventureTitle}</h1>
-    <p class="subtitle">9 missioni, scanner fotografico assistito, codici segreti, musica, chiavi, frammenti e un tesoro finale nel mondo vero.</p>
+    <p class="subtitle">9 missioni, immagini dettaglio come obiettivo, aiutino grandangolare, scanner più severo, musica e codici segreti.</p>
     ${mascot(adventure.mascot?.intro || 'Pronte per partire?')}
     <div class="progress"><div class="bar" style="width:${pct}%"></div></div>
     <p class="small">${done}/9 missioni completate · ${state.xp} XP · Livello ${state.level}</p>
@@ -139,7 +142,8 @@ function mission(){
   return `<section class="grid">
     <div class="card">
       <div class="mission-head"><div class="mission-icon">${m.icon}</div><div><div class="kicker">Missione ${m.id}/9</div><h2>${m.title}</h2></div></div>
-      <img class="mission-img" src="${missionImg(m,'detail')}" onerror="this.style.display='none'">
+      <img class="mission-img" src="${missionImg(m,'detail')}" alt="Dettaglio da fotografare" onerror="this.style.display='none'">
+      <p class="small">🎯 Questa è la foto dettaglio: è l'obiettivo da trovare e fotografare.</p>
       <div class="story-card">📖 ${m.story || m.intro}</div>
       ${mascot((m.guide && m.guide[1]) || 'Osservate bene e cercate il segnale giusto.')}
       <p class="clue">${m.clue}</p>
@@ -174,6 +178,7 @@ function showHelp(id){
       <div class="kicker">Aiutino missione ${m.id}</div>
       <h2>${m.title}</h2>
       <p>${m.target}</p>
+      <p class="small">Questa è la foto grandangolare: serve solo per capire dove si trova il dettaglio.</p>
       <img src="${missionImg(m,'wide')}" alt="Foto grandangolare">
       <button class="btn" onclick="document.querySelector('.help-modal').remove()">Ho capito</button>
     </div>
@@ -198,54 +203,66 @@ async function scanPhoto(id, dataUrl){
     <p class="small" id="scanText">Controllo foto in corso...</p>
     <div class="scanline"><i></i></div>
   </div></div>`);
-  let score = 0.75;
+  let score = 0;
   try {
     const m = adventure.missions.find(x=>x.id===id);
     score = await compareImages(dataUrl, missionImg(m,'detail'));
-  } catch(e){ score = 0.65; }
+  } catch(e){ score = 0; }
   setTimeout(()=>{
     const scan = $('.scan');
-    if(state.recognitionMode === 'auto' && score < 0.45){
+    const threshold = state.recognitionMode === 'auto' ? 0.58 : 0.48;
+    if(score >= threshold){
+      scan.querySelector('#scanText').innerHTML = `<span class="result-badge">Obiettivo riconosciuto ${(score*100|0)}%</span>`;
+      setTimeout(()=>completeMission(id, score),900);
+    } else {
       failSound(); vibrate([80,60,80]);
       scan.querySelector('.scanbox').classList.add('shake');
-      scan.querySelector('#scanText').innerHTML = `<span class="result-badge fail-badge">Somiglianza bassa: ${(score*100|0)}%</span>
-      <div class="scan-choice"><button class="btn" onclick="document.querySelector('.scan').remove(); takePhoto(${id})">Riprova</button><button class="btn secondary" onclick="completeMission(${id}, ${score})">Sblocca comunque</button></div>`;
-    } else {
-      scan.querySelector('#scanText').innerHTML = `<span class="result-badge">Foto acquisita ${(score*100|0)}%</span>
-      <p class="small">Lumi chiede conferma: l'obiettivo è quello giusto?</p>
-      <div class="scan-choice"><button class="btn" onclick="completeMission(${id}, ${score})">Sì, conferma</button><button class="btn secondary" onclick="document.querySelector('.scan').remove(); takePhoto(${id})">Riprova</button></div>`;
+      scan.querySelector('#scanText').innerHTML = `<span class="result-badge fail-badge">Foto non riconosciuta: ${(score*100|0)}%</span>
+      <p class="small">Prova a inquadrare meglio il dettaglio mostrato nella missione.</p>
+      <div class="scan-choice"><button class="btn" onclick="document.querySelector('.scan').remove(); takePhoto(${id})">Riprova</button>${state.recognitionMode==='assisted'?`<button class="btn secondary" onclick="completeMission(${id}, ${score})">Sblocca comunque</button>`:''}</div>`;
     }
   },2200);
 }
 
-// lightweight local similarity. It helps, but assisted confirmation avoids ruining the game outdoors.
+// Improved local similarity: color histogram + luminance hash + central crop check
 async function compareImages(dataUrl, refUrl){
   const [a,b] = await Promise.all([imageFeatures(dataUrl), imageFeatures(refUrl)]);
   let diff = 0;
   for(let i=0;i<a.hist.length;i++) diff += Math.abs(a.hist[i]-b.hist[i]);
-  const histScore = Math.max(0, 1 - diff/2);
+  const histScore = Math.max(0, 1 - diff/1.35);
   let same=0;
   for(let i=0;i<a.hash.length;i++) if(a.hash[i]===b.hash[i]) same++;
   const hashScore=same/a.hash.length;
-  return histScore*.55 + hashScore*.45;
+  let cdiff=0;
+  for(let i=0;i<a.center.length;i++) cdiff += Math.abs(a.center[i]-b.center[i]);
+  const centerScore = Math.max(0, 1 - cdiff/1.20);
+  return Math.max(0, Math.min(1, histScore*.35 + hashScore*.30 + centerScore*.35));
 }
 function loadImg(src){ return new Promise((res,rej)=>{ const img=new Image(); img.onload=()=>res(img); img.onerror=rej; img.src=src; });}
 async function imageFeatures(src){
   const img=await loadImg(src);
   const c=document.createElement('canvas'), ctx=c.getContext('2d',{willReadFrequently:true});
-  c.width=32; c.height=32; ctx.drawImage(img,0,0,32,32);
-  const d=ctx.getImageData(0,0,32,32).data;
-  const hist=new Array(12).fill(0), lum=[];
-  for(let i=0;i<d.length;i+=4){
-    const r=d[i],g=d[i+1],b=d[i+2],l=(r+g+b)/3;
-    hist[Math.min(3, r>>6)]++; hist[4+Math.min(3, g>>6)]++; hist[8+Math.min(3, b>>6)]++;
-    lum.push(l);
+  c.width=48; c.height=48; ctx.drawImage(img,0,0,48,48);
+  const d=ctx.getImageData(0,0,48,48).data;
+  const hist=new Array(18).fill(0), lum=[], center=new Array(18).fill(0);
+  let ccount=0;
+  for(let y=0;y<48;y++){
+    for(let x=0;x<48;x++){
+      const i=(y*48+x)*4, r=d[i],g=d[i+1],b=d[i+2],l=(r+g+b)/3;
+      hist[Math.min(5, r>>5)]++; hist[6+Math.min(5, g>>5)]++; hist[12+Math.min(5, b>>5)]++;
+      lum.push(l);
+      if(x>=12&&x<36&&y>=12&&y<36){
+        center[Math.min(5, r>>5)]++; center[6+Math.min(5, g>>5)]++; center[12+Math.min(5, b>>5)]++;
+        ccount++;
+      }
+    }
   }
   const total=lum.length;
   for(let i=0;i<hist.length;i++) hist[i]/=total*3;
+  for(let i=0;i<center.length;i++) center[i]/=ccount*3;
   const avg=lum.reduce((a,b)=>a+b,0)/lum.length;
   const hash=lum.map(x=>x>avg?1:0);
-  return {hist,hash};
+  return {hist,hash,center};
 }
 function randomReward(){
   const pool=adventure.randomRewards||['Stella Bonus'];
@@ -304,12 +321,12 @@ function album(){
 function settings(){
   return `<section class="grid">
     <div class="card">
-      <div class="kicker">Opzioni</div><h2>Audio e gioco</h2>
+      <div class="kicker">Opzioni</div><h2>Audio e scanner</h2>
       ${mascot('Su iPhone l’audio parte solo se lo attivate voi con un tap. È una regola del telefono, non un mio capriccio da volpe.')}
       <div class="setting-row"><div><b>Musica ed effetti</b><p class="small">Attiva musica di sottofondo e suoni premio.</p></div><div class="switch ${state.audioOn?'on':''}" onclick="toggleAudio()"><i></i></div></div>
       <button class="btn secondary" onclick="testSound()">Prova audio</button>
-      <div class="setting-row"><div><b>Scanner foto assistito</b><p class="small">Consigliato: analizza la foto, poi chiede conferma. Così il gioco non si blocca mai.</p></div><div class="switch ${state.recognitionMode==='assisted'?'on':''}" onclick="state.recognitionMode=state.recognitionMode==='assisted'?'auto':'assisted';save();render()"><i></i></div></div>
-      <p class="small">Modalità attuale: <b>${state.recognitionMode==='assisted'?'Assistita':'Automatica severa'}</b></p>
+      <div class="setting-row"><div><b>Scanner automatico severo</b><p class="small">Se acceso, una foto casuale NON dovrebbe passare. Se spento, compare anche “sblocca comunque”.</p></div><div class="switch ${state.recognitionMode==='auto'?'on':''}" onclick="state.recognitionMode=state.recognitionMode==='auto'?'assisted':'auto';save();render()"><i></i></div></div>
+      <p class="small">Modalità attuale: <b>${state.recognitionMode==='auto'?'Automatica severa':'Assistita'}</b></p>
     </div>
   </section>`;
 }
