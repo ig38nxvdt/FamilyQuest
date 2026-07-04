@@ -12,3 +12,16 @@
 .result-badge{display:inline-block;padding:8px 12px;border-radius:999px;background:rgba(114,242,184,.16);border:1px solid rgba(114,242,184,.28);color:#a8ffd2;font-weight:900;margin:5px}.fail-badge{background:rgba(255,107,107,.16);border-color:rgba(255,107,107,.3);color:#ffb5b5}
 .shake{animation:shake .45s ease}@keyframes shake{25%{transform:translateX(-6px)}50%{transform:translateX(6px)}75%{transform:translateX(-4px)}}
 .levelup{font-size:22px;color:var(--gold);font-weight:900;text-shadow:0 0 18px rgba(255,209,102,.55)}
+
+
+/* FamilyQuest v3 */
+.help-modal{position:fixed;inset:0;background:rgba(5,7,22,.88);z-index:90;display:grid;place-items:center;padding:16px}
+.help-card{width:min(760px,100%);max-height:90vh;overflow:auto}
+.help-card img{width:100%;border-radius:24px;border:1px solid rgba(255,255,255,.16);margin:12px 0}
+.setting-row{display:flex;justify-content:space-between;align-items:center;gap:14px;padding:14px;border-radius:18px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);margin:10px 0}
+.switch{width:66px;height:36px;border-radius:999px;background:rgba(255,255,255,.18);position:relative;border:1px solid rgba(255,255,255,.18);cursor:pointer;flex:0 0 auto}
+.switch i{position:absolute;width:28px;height:28px;border-radius:50%;background:white;left:4px;top:3px;transition:.25s ease}
+.switch.on{background:linear-gradient(135deg,var(--pink),var(--blue))}
+.switch.on i{left:32px}
+.code-help{background:rgba(56,189,248,.10);border:1px solid rgba(56,189,248,.20);border-radius:20px;padding:14px;margin-top:12px}
+.scan-choice{display:grid;gap:10px;margin-top:12px}

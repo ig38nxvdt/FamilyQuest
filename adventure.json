@@ -195,7 +195,7 @@
       ]
     }
   ],
-  "version": "2.0",
+  "version": "3.0",
   "mascot": {
     "name": "Lumi",
     "emoji": "🦊",
@@ -228,5 +228,9 @@
     "Bussola Mini",
     "Caramella Cosmica",
     "Piuma di Lumi"
-  ]
+  ],
+  "howCodesWork": {
+    "title": "Come funzionano i codici segreti",
+    "text": "Ogni missione completata sblocca una lettera o un simbolo. Le prime sette lettere formano il codice RETRONE. Altri codici speciali sono LUMI e CASA."
+  }
 }

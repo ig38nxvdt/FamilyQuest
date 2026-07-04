@@ -1,32 +1,22 @@
-# FamilyQuest — Retrone Memories v2
+# FamilyQuest — Retrone Memories v3
 
-PWA installabile per iPhone/Android con missioni fotografiche, XP, livelli, chiavi, frammenti, badge, album ricordi e funzioni da mini-videogioco.
+## Correzioni v3
 
-## Novità v2
+- Le immagini principali delle missioni ora sono i dettagli da fotografare.
+- Il tasto Aiutino apre la foto grandangolare.
+- Aggiunta pagina Opzioni.
+- Audio attivabile/disattivabile da pagina Opzioni.
+- Su iPhone l'audio parte solo dopo un tap: usare "Prova audio" o l'interruttore.
+- I codici segreti ora sono spiegati nell'Inventario.
+- Lo scanner foto ora è in modalità assistita: analizza e poi chiede conferma, così non blocca il gioco.
+- Puoi passare a modalità automatica severa dalle Opzioni.
 
-- Animazioni e particelle neon
-- Musica generata nel browser
-- Effetti sonori
-- Mascotte guida: Lumi
-- Storia collegata tra le missioni
-- Premi casuali
-- Codici segreti
-- Riconoscimento fotografico locale, senza server
-- Fallback sicuro: se il riconoscimento non è sicuro, puoi sbloccare comunque
+## Codici segreti
 
-## Codici segreti inclusi
-
-- `RETRONE`
-- `LUMI`
-- `CASA`
+- RETRONE
+- LUMI
+- CASA
 
 ## GitHub Pages
 
-1. Carica tutti i file e le cartelle nella root del repository.
-2. Vai su **Settings → Pages**.
-3. Source: **Deploy from a branch**.
-4. Branch: **main**.
-5. Folder: **/root**.
-6. Salva.
-
-Poi apri il link generato da GitHub Pages con Safari e fai: **Condividi → Aggiungi alla schermata Home**.
+Carica i file nella root del repository, poi Settings → Pages → Deploy from branch → main → /root.
