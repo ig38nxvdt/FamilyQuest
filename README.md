@@ -1,28 +1,27 @@
-# FamilyQuest — Retrone Memories v7
+# FamilyQuest — Retrone Memories v8
 
-## Novità v7 — audio reale
+## Fix audio v8
 
-Sono stati aggiunti i file audio caricati dall'utente:
+- Rimossi i beep come musica.
+- Le tracce MP3 sono usate direttamente.
+- Aggiunti pulsanti di test per ogni traccia in Opzioni.
+- Aggiunto stato audio visibile nell'app.
+- Cache aggiornata a v8.
 
-- `maintheme.mp3` → `assets/audio/main-theme.mp3`
-- `exlpration.mp3` → `assets/audio/exploration.mp3`
-- `mistery.mp3` → `assets/audio/mystery.mp3`
-- `Success.mp3` → `assets/audio/success.mp3`
-- `Finale.mp3` → `assets/audio/finale.mp3`
+## File audio
 
-## Come vengono usati
+- `assets/audio/main-theme.mp3`
+- `assets/audio/exploration.mp3`
+- `assets/audio/mystery.mp3`
+- `assets/audio/success.mp3`
+- `assets/audio/finale.mp3`
 
-- Main theme: menu, inventario, editor, diario
-- Exploration: schermata missione
-- Mystery: scanner foto
-- Success: missione completata
-- Finale: schermata finale
+## Importante su iPhone
 
-## Nota iPhone
+Dopo aver caricato la v8 su GitHub:
+1. Apri il sito da Safari.
+2. Vai in Opzioni.
+3. Premi `Prova audio`.
+4. Se avevi già aggiunto l'app alla Home, rimuovila e aggiungila di nuovo.
 
-Su iPhone l'audio parte solo dopo un tap dell'utente. Vai in **Opzioni → Prova audio** oppure attiva l'interruttore audio.
-
-## GitHub Pages
-
-Carica tutto nella root del repository e fai commit.
-Se senti ancora i vecchi beep o non parte nulla, rimuovi l'app dalla schermata Home e aggiungila di nuovo.
+Se continua a non partire, è cache vecchia: Impostazioni → Safari → Avanzate → Dati siti web → elimina dati di `github.io`.
