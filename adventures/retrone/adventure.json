@@ -1,0 +1,204 @@
+{
+  "engineVersion": "1.0.0",
+  "id": "retrone-memories",
+  "title": "Retrone Memories",
+  "subtitle": "La prima avventura di FamilyQuest",
+  "mascot": {
+    "name": "Lumi",
+    "emoji": "🦊",
+    "intro": "Ciao esploratrici! Io sono Lumi. Ho trovato nove ricordi dispersi nel quartiere."
+  },
+  "audio": {
+    "main": "assets/audio/main-theme.mp3",
+    "exploration": "assets/audio/exploration.mp3",
+    "mystery": "assets/audio/mystery.mp3",
+    "success": "assets/audio/success.mp3",
+    "finale": "assets/audio/finale.mp3"
+  },
+  "secretCodes": [
+    {
+      "code": "RETRONE",
+      "reward": "Cristallo del Fiume",
+      "xp": 90
+    },
+    {
+      "code": "LUMI",
+      "reward": "Stella della Guida",
+      "xp": 70
+    },
+    {
+      "code": "CASA",
+      "reward": "Sigillo del Ritorno",
+      "xp": 80
+    }
+  ],
+  "randomEvents": [
+    {
+      "id": "pose",
+      "title": "Sfida di Lumi",
+      "text": "Fate una posa da esploratrici per 5 secondi.",
+      "reward": "Scintilla Buffa",
+      "xp": 25
+    },
+    {
+      "id": "count",
+      "title": "Occhi Aperti",
+      "text": "Contate tre cose blu vicino a voi.",
+      "reward": "Occhio di Falco",
+      "xp": 25
+    },
+    {
+      "id": "team",
+      "title": "Modalità Squadra",
+      "text": "Inventate un nome per la vostra squadra di oggi.",
+      "reward": "Sigillo Squadra",
+      "xp": 30
+    }
+  ],
+  "missions": [
+    {
+      "id": 1,
+      "title": "La Porta del Sapere",
+      "icon": "🏫",
+      "target": "Il murale colorato vicino al cancello",
+      "targetImage": "adventures/retrone/images/mission-1-target.png",
+      "hintImage": "adventures/retrone/images/mission-1-hint.png",
+      "xp": 100,
+      "key": "Chiave dell'Inizio",
+      "fragment": "Frammento del Ricordo",
+      "badge": "Primo Passo",
+      "item": "Mappa dei Ricordi",
+      "secret": "R",
+      "story": "Il Diario dei Ricordi si è riaperto. La prima pagina profuma di scuola, mattine e zaini pieni di mondi.",
+      "clue": "Cercate il luogo dove tante mattine sono iniziate con zaini, risate e campanelle. La prima chiave dorme accanto a un simbolo colorato."
+    },
+    {
+      "id": 2,
+      "title": "Il Ponte del Retrone",
+      "icon": "🌉",
+      "target": "Il dettaglio centrale della struttura del ponte",
+      "targetImage": "adventures/retrone/images/mission-2-target.png",
+      "hintImage": "adventures/retrone/images/mission-2-hint.jpg",
+      "xp": 120,
+      "key": "Chiave del Coraggio",
+      "fragment": "Frammento del Passaggio",
+      "badge": "Attraversamento",
+      "item": "Corda del Ponte",
+      "secret": "E",
+      "story": "Una pagina azzurra vibra vicino all'acqua. Il ponte custodisce il passaggio tra ciò che era e ciò che sarà.",
+      "clue": "Trovate il passaggio che unisce due rive. Molti lo attraversano, pochi osservano il suo piccolo segno nascosto."
+    },
+    {
+      "id": 3,
+      "title": "Il Sentiero dell'Anello",
+      "icon": "🪧",
+      "target": "Il cartello Anello Parco del Retrone",
+      "targetImage": "adventures/retrone/images/mission-3-target.png",
+      "hintImage": "adventures/retrone/images/mission-3-hint.png",
+      "xp": 140,
+      "key": "Chiave dell'Orientamento",
+      "fragment": "Frammento della Direzione",
+      "badge": "Occhio alla Freccia",
+      "item": "Bussola dell'Anello",
+      "secret": "T",
+      "story": "Il diario mostra una freccia: non indica solo una strada, ma la scelta di continuare.",
+      "clue": "Lasciando alle spalle il parco, cercate il segno che indica una strada nuova."
+    },
+    {
+      "id": 4,
+      "title": "Un Nuovo Amico",
+      "icon": "🐶",
+      "target": "Il cartello Canile Comunale",
+      "targetImage": "adventures/retrone/images/mission-4-target.png",
+      "hintImage": "adventures/retrone/images/mission-4-hint.png",
+      "xp": 160,
+      "key": "Chiave dell'Amicizia",
+      "fragment": "Frammento del Cuore",
+      "badge": "Cuore Grande",
+      "item": "Medaglia dell'Amicizia",
+      "secret": "R",
+      "story": "Qui la memoria diventa morbida, fedele, con quattro zampe e occhi buoni.",
+      "clue": "C'è un segnale che indica la strada verso un ricordo speciale della vostra famiglia."
+    },
+    {
+      "id": 5,
+      "title": "L'Ombra del Passaggio",
+      "icon": "⚠️",
+      "target": "Il cartello di pericolo prima del tunnel",
+      "targetImage": "adventures/retrone/images/mission-5-target.png",
+      "hintImage": "adventures/retrone/images/mission-5-hint.png",
+      "xp": 180,
+      "key": "Chiave del Mistero",
+      "fragment": "Frammento dell'Ombra",
+      "badge": "Custodi del Passaggio",
+      "item": "Lanterna del Passaggio",
+      "secret": "O",
+      "story": "Il tunnel respira piano. Non fa paura: chiede solo coraggio e occhi attenti.",
+      "clue": "Cercate l'ingresso dove la strada passa sopra e il sentiero sparisce sotto. Prima di entrare, un simbolo avverte i viaggiatori."
+    },
+    {
+      "id": 6,
+      "title": "Il Guardiano del Bosco",
+      "icon": "🌿",
+      "target": "Il cartello sul rispetto dei prati",
+      "targetImage": "adventures/retrone/images/mission-6-target.png",
+      "hintImage": "adventures/retrone/images/mission-6-hint.png",
+      "xp": 200,
+      "key": "Chiave del Rispetto",
+      "fragment": "Frammento della Natura",
+      "badge": "Guardiane del Verde",
+      "item": "Seme del Rispetto",
+      "secret": "N",
+      "story": "Una pagina verde sussurra: proteggere un luogo è il modo più bello per farne parte.",
+      "clue": "C'è un guardiano silenzioso che non parla, ma ha lasciato un messaggio importante per tutti."
+    },
+    {
+      "id": 7,
+      "title": "La Sorgente degli Esploratori",
+      "icon": "💧",
+      "target": "La fontanella dove vi fermate a bere",
+      "targetImage": "adventures/retrone/images/mission-7-target.png",
+      "hintImage": "adventures/retrone/images/mission-7-hint.png",
+      "xp": 220,
+      "key": "Chiave dell'Energia",
+      "fragment": "Frammento della Sorgente",
+      "badge": "Sempre Pronte",
+      "item": "Goccia d'Energia",
+      "secret": "E",
+      "story": "La sorgente canta piano. Prima di proseguire, anche le eroine bevono e sorridono.",
+      "clue": "Cercate la piccola sorgente che disseta chi attraversa il parco. Fotografatela, poi bevete un sorso d'acqua."
+    },
+    {
+      "id": 8,
+      "title": "Il Custode delle Storie",
+      "icon": "📚",
+      "target": "Il frigorifero trasformato in libreria",
+      "targetImage": "adventures/retrone/images/mission-8-target.png",
+      "hintImage": "adventures/retrone/images/mission-8-hint.png",
+      "xp": 240,
+      "key": "Chiave della Fantasia",
+      "fragment": "Frammento delle Storie",
+      "badge": "Amanti delle Storie",
+      "item": "Pagina Curiosa",
+      "secret": "★",
+      "story": "Le storie non stanno ferme: aspettano qualcuno che le apra, anche dentro un vecchio frigo.",
+      "clue": "Cercate un oggetto insolito: un frigo che non conserva il freddo, ma parole, copertine e mondi interi."
+    },
+    {
+      "id": 9,
+      "title": "Il Messaggio Finale",
+      "icon": "🏡",
+      "target": "La cassetta della pubblicità",
+      "targetImage": "adventures/retrone/images/mission-9-target.png",
+      "hintImage": "adventures/retrone/images/mission-9-hint.png",
+      "xp": 300,
+      "key": "Chiave di Casa",
+      "fragment": "Frammento della Famiglia",
+      "badge": "Ritorno alla Base",
+      "item": "Chiave d'Argento",
+      "secret": "LUMI",
+      "story": "L'ultima pagina porta a casa. Perché ogni avventura vera sa sempre dove tornare.",
+      "clue": "Cercate il posto dove ogni giorno arrivano messaggi. Lì vi aspetta l'ultimo segnale."
+    }
+  ]
+}
