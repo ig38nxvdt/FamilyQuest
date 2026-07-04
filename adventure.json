@@ -429,7 +429,7 @@
       }
     }
   ],
-  "version": "6.0",
+  "version": "7.0",
   "mascot": {
     "name": "Lumi",
     "emoji": "🦊",
@@ -493,5 +493,12 @@
     "requiredItem": "Chiave d'Argento",
     "description": "Missione segreta sbloccata solo dopo aver raccolto tutti gli oggetti.",
     "reward": "Corona delle Esploratrici"
+  },
+  "audio": {
+    "main": "assets/audio/main-theme.mp3",
+    "exploration": "assets/audio/exploration.mp3",
+    "mystery": "assets/audio/mystery.mp3",
+    "success": "assets/audio/success.mp3",
+    "finale": "assets/audio/finale.mp3"
   }
 }

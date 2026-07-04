@@ -2,13 +2,16 @@
 const $ = s => document.querySelector(s);
 const app = $('#app');
 const cameraInput = $('#cameraInput');
-const saveKey = 'familyquest-retrone-v6';
+const saveKey = 'familyquest-retrone-v7';
 
 let adventure = null;
 let view = 'home';
 let pendingMissionId = null;
 let audioCtx = null;
 let musicTimer = null;
+let currentMusic = null;
+let musicName = null;
+let sfxSuccess = null;
 
 const defaultState = {
   started:false,
@@ -35,13 +38,13 @@ function currentMission(){ return adventure.missions.find(m=>m.id===state.curren
 const imgExt = {1:{detail:'png',wide:'png'},2:{detail:'png',wide:'jpg'},3:{detail:'png',wide:'png'},4:{detail:'png',wide:'png'},5:{detail:'png',wide:'png'},6:{detail:'png',wide:'png'},7:{detail:'png',wide:'png'},8:{detail:'png',wide:'png'},9:{detail:'png',wide:'png'}};
 
 function missionImg(m,type='detail'){
-  return `assets/missions/m${m.id}-${type}.${imgExt[m.id][type]}?v=6`;
+  return `assets/missions/m${m.id}-${type}.${imgExt[m.id][type]}?v=7`;
 }
 function vibrate(ms=60){ try{ navigator.vibrate && navigator.vibrate(ms); }catch{} }
 
 async function init(){
-  adventure = await fetch('adventure.json?v=6').then(r=>r.json());
-  if('serviceWorker' in navigator) navigator.serviceWorker.register('./service-worker.js?v=6').catch(()=>{});
+  adventure = await fetch('adventure.json?v=7').then(r=>r.json());
+  if('serviceWorker' in navigator) navigator.serviceWorker.register('./service-worker.js?v=7').catch(()=>{});
   createParticles();
   render();
 }
@@ -62,6 +65,49 @@ function createParticles(){
   document.body.appendChild(wrap);
 }
 
+
+function makeAudio(src, loop=false, volume=0.45){
+  const a = new Audio(src);
+  a.loop = loop;
+  a.volume = volume;
+  a.preload = 'auto';
+  return a;
+}
+function initAudioFiles(){
+  if(!adventure.audio || currentMusic) return;
+  sfxSuccess = makeAudio(adventure.audio.success, false, 0.85);
+}
+function playMusic(name){
+  if(!state.audioOn || !adventure.audio) return;
+  initAudioFiles();
+  const src = adventure.audio[name];
+  if(!src) return;
+  if(musicName === name && currentMusic && !currentMusic.paused) return;
+  if(currentMusic){
+    currentMusic.pause();
+    currentMusic.currentTime = 0;
+  }
+  currentMusic = makeAudio(src, true, name === 'exploration' ? 0.38 : 0.42);
+  musicName = name;
+  currentMusic.play().catch(()=>{});
+}
+function stopRealMusic(){
+  if(currentMusic){
+    currentMusic.pause();
+    currentMusic.currentTime = 0;
+  }
+  currentMusic = null;
+  musicName = null;
+}
+function playSuccessReal(){
+  if(!state.audioOn || !adventure.audio) return;
+  initAudioFiles();
+  try{
+    sfxSuccess.currentTime = 0;
+    sfxSuccess.play().catch(()=>successSound());
+  }catch{ successSound(); }
+}
+
 function ensureAudio(){
   audioCtx = audioCtx || new (window.AudioContext||window.webkitAudioContext)();
   if(audioCtx.state === 'suspended') audioCtx.resume();
@@ -77,26 +123,21 @@ function beep(freq=520,dur=.09,type='sine',gain=.045){
 function startMusicLoop(){
   stopMusic();
   if(!state.audioOn) return;
-  ensureAudio();
-  const notes=[392,493.88,587.33,739.99,659.25,523.25];
-  let i=0;
-  musicTimer=setInterval(()=>{ beep(notes[i++%notes.length],.12,'triangle',.025); },850);
+  initAudioFiles();
+  const track = view === 'mission' ? 'exploration' : (view === 'diary' ? 'main' : 'main');
+  playMusic(track);
 }
-function stopMusic(){ if(musicTimer){ clearInterval(musicTimer); musicTimer=null; } }
-function toggleAudio(){
-  state.audioOn = !state.audioOn;
-  save();
-  if(state.audioOn){ ensureAudio(); startMusicLoop(); successSound(); }
-  else stopMusic();
-  render();
+function stopMusic(){
+  if(musicTimer){ clearInterval(musicTimer); musicTimer=null; }
+  stopRealMusic();
 }
 function successSound(){ [523,659,784,1046].forEach((n,i)=>setTimeout(()=>beep(n,.11,'triangle',.05),i*95)); }
 function failSound(){ [220,180].forEach((n,i)=>setTimeout(()=>beep(n,.13,'sawtooth',.035),i*110)); }
-function testSound(){ ensureAudio(); state.audioOn=true; save(); startMusicLoop(); successSound(); render(); }
+function testSound(){ ensureAudio(); state.audioOn=true; save(); startMusicLoop(); setTimeout(()=>playSuccessReal(),350); render(); }
 
 function shell(content){
   return `<div class="topbar">
-    <div class="brand"><div class="logo">🗝️</div><div><div class="kicker">FamilyQuest v6</div><b>${adventure.adventureTitle}</b></div></div>
+    <div class="brand"><div class="logo">🗝️</div><div><div class="kicker">FamilyQuest v7</div><b>${adventure.adventureTitle}</b></div></div>
     <button class="btn ghost" onclick="reset()">Reset</button>
   </div>${content}${nav()}`;
 }
@@ -127,10 +168,11 @@ function home(){
     <button class="btn secondary" onclick="state.started=true;view='settings';save();render()">Opzioni audio</button>
   </div></section>`;
 }
-function startGame(){ state.started=true; save(); view='mission'; successSound(); render(); }
+function startGame(){ state.started=true; save(); view='mission'; playMusic('exploration'); playSuccessReal(); render(); }
 
 function render(){
   if(!adventure) return;
+  if(state.audioOn){ setTimeout(()=>{ if(view==='mission') playMusic('exploration'); else if(view==='settings') playMusic('main'); else if(view==='diary') playMusic('main'); else playMusic('main'); },50); }
   if(!state.started){ app.innerHTML=home(); return; }
   if(view==='inventory') app.innerHTML=shell(inventory());
   else if(view==='album') app.innerHTML=shell(album());
@@ -202,7 +244,7 @@ cameraInput.addEventListener('change', e=>{
   reader.readAsDataURL(file);
 });
 
-async function scanPhoto(id, dataUrl){
+async function scanPhoto(id, dataUrl){ if(state.audioOn) playMusic('mystery');
   app.insertAdjacentHTML('beforeend', `<div class="scan"><div class="scanbox card">
     <div class="hero-icon">🔍</div><h2>Scanner ricordi...</h2>
     <p class="small" id="scanText">Controllo foto in corso...</p>
@@ -284,7 +326,7 @@ function completeMission(id, score=0.75){
     state.xp += m.xp;
     state.level = levelForXP(state.xp);
     state.current = Math.min(id+1, adventure.missions.length+1);
-    save(); vibrate(120); successSound(); maybeRandomEvent();
+    save(); vibrate(120); playSuccessReal(); maybeRandomEvent();
   }
   app.insertAdjacentHTML('beforeend', `<div class="reward"><div class="reward-card">
     <div class="reward-icon">🗝️</div>
@@ -328,14 +370,14 @@ function settings(){
     <div class="card">
       <div class="kicker">Opzioni</div><h2>Audio e scanner</h2>
       ${mascot('Su iPhone l’audio parte solo se lo attivate voi con un tap. È una regola del telefono, non un mio capriccio da volpe.')}
-      <div class="setting-row"><div><b>Musica ed effetti</b><p class="small">Attiva musica di sottofondo e suoni premio.</p></div><div class="switch ${state.audioOn?'on':''}" onclick="toggleAudio()"><i></i></div></div>
+      <div class="setting-row"><div><b>Musica ed effetti</b><p class="small">Attiva le tracce audio caricate: tema, esplorazione, mistero, successo e finale.</p></div><div class="switch ${state.audioOn?'on':''}" onclick="toggleAudio()"><i></i></div></div>
       <button class="btn secondary" onclick="testSound()">Prova audio</button>
       <div class="setting-row"><div><b>Scanner automatico severo</b><p class="small">Se acceso, una foto casuale NON dovrebbe passare. Se spento, compare anche “sblocca comunque”.</p></div><div class="switch ${state.recognitionMode==='auto'?'on':''}" onclick="state.recognitionMode=state.recognitionMode==='auto'?'assisted':'auto';save();render()"><i></i></div></div>
       <p class="small">Modalità attuale: <b>${state.recognitionMode==='auto'?'Automatica severa':'Assistita'}</b></p>
     </div>
   </section>`;
 }
-function finale(){
+function finale(){ if(state.audioOn) setTimeout(()=>playMusic('finale'),80);
   return `<section class="hero"><div class="card">
     <div class="hero-icon">🎉</div><div class="kicker">Missione completata</div>
     <h1 class="title">Tesoro sbloccato</h1>

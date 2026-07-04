@@ -1,28 +1,28 @@
-# FamilyQuest — Retrone Memories v6
+# FamilyQuest — Retrone Memories v7
 
-## Novità v6 — FamilyQuest Engine
+## Novità v7 — audio reale
 
-- Editor visuale base per creare nuove avventure ed esportare JSON
-- Dialoghi ramificati per Lumi
-- Inventario più utile con oggetti missione
-- Achievement / Trofei
-- Diario finale con foto e storia
-- Eventi casuali durante il gioco
+Sono stati aggiunti i file audio caricati dall'utente:
 
-## Nota editor
+- `maintheme.mp3` → `assets/audio/main-theme.mp3`
+- `exlpration.mp3` → `assets/audio/exploration.mp3`
+- `mistery.mp3` → `assets/audio/mystery.mp3`
+- `Success.mp3` → `assets/audio/success.mp3`
+- `Finale.mp3` → `assets/audio/finale.mp3`
 
-L'editor v6 è una prima base: permette di generare JSON e scaricare il diario. Nelle prossime versioni può diventare un editor completo con drag & drop immagini.
+## Come vengono usati
 
-## Musica
+- Main theme: menu, inventario, editor, diario
+- Exploration: schermata missione
+- Mystery: scanner foto
+- Success: missione completata
+- Finale: schermata finale
 
-Per aggiungere musica reale, crea una cartella `assets/audio/` e usa file MP3 o OGG loopabili.
-Consigli:
-- menu: 60-120 sec
-- esplorazione: 2-4 min
-- mistero: 45-90 sec
-- successo: 5-10 sec
-- finale: 30-60 sec
+## Nota iPhone
+
+Su iPhone l'audio parte solo dopo un tap dell'utente. Vai in **Opzioni → Prova audio** oppure attiva l'interruttore audio.
 
 ## GitHub Pages
 
-Carica tutto nella root del repository.
+Carica tutto nella root del repository e fai commit.
+Se senti ancora i vecchi beep o non parte nulla, rimuovi l'app dalla schermata Home e aggiungila di nuovo.

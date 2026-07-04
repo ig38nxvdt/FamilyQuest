@@ -47,3 +47,5 @@
 .random-event .card{max-width:560px;text-align:center}
 .badge-row{display:flex;gap:8px;flex-wrap:wrap}.badge-pill{padding:8px 10px;border-radius:999px;background:rgba(255,255,255,.10);border:1px solid rgba(255,255,255,.16);font-size:13px;font-weight:800}
 .export-box{white-space:pre-wrap;max-height:280px;overflow:auto;background:rgba(0,0,0,.35);border-radius:16px;padding:12px;border:1px solid rgba(255,255,255,.12);font-size:12px}
+
+/* v7 audio reale */

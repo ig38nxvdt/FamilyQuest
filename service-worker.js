@@ -1,6 +1,7 @@
-const CACHE_NAME='familyquest-v6';
+const CACHE_NAME='familyquest-v7';
 const ASSETS=[
  './','./index.html','./style.css','./app.js','./adventure.json','./manifest.webmanifest','./assets/icons/icon.svg',
+ './assets/audio/main-theme.mp3','./assets/audio/exploration.mp3','./assets/audio/mystery.mp3','./assets/audio/success.mp3','./assets/audio/finale.mp3',
  './assets/missions/m1-detail.png','./assets/missions/m1-wide.png',
  './assets/missions/m2-detail.png','./assets/missions/m2-wide.jpg',
  './assets/missions/m3-detail.png','./assets/missions/m3-wide.png',
