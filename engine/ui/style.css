@@ -20,7 +20,7 @@ h1,h2,h3,p{margin-top:0}.kicker{color:var(--blue);font-weight:800;letter-spacing
 /* v1.1 Foto Eventi */
 .random-event .actions{justify-content:center}.album .small{line-height:1.35}
 
-/* v1.2 Lumi expressions + editor */
+/* 1.2.1 hotfix: Lumi expressions */
 .mascot{transition:transform .25s ease, box-shadow .25s ease}
 .mascot-face{animation:lumiPop .55s ease}
 @keyframes lumiPop{0%{transform:scale(.7) rotate(-6deg);opacity:.4}70%{transform:scale(1.12)}100%{transform:scale(1)}}
@@ -28,4 +28,3 @@ h1,h2,h3,p{margin-top:0}.kicker{color:var(--blue);font-weight:800;letter-spacing
 .mood-scared{box-shadow:0 0 28px rgba(255,133,133,.18)}
 .mood-proud{box-shadow:0 0 28px rgba(255,209,102,.18)}
 .mood-tender{box-shadow:0 0 28px rgba(255,94,168,.18)}
-.editor-area select{width:100%;border:1px solid rgba(255,255,255,.16);background:rgba(0,0,0,.25);color:white;border-radius:16px;padding:12px;margin:6px 0;font:inherit}

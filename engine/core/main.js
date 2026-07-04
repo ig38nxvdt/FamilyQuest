@@ -5,7 +5,7 @@ import {levelForXP, levelName, achievements as getAchievements} from '../modules
 
 const $=s=>document.querySelector(s);
 const app=$('#app'), cameraInput=$('#cameraInput');
-const save=new SaveManager('familyquest-engine-1-2');
+const save=new SaveManager('familyquest-engine-1-2-1');
 const audio=new AudioManager();
 const recognition=new RecognitionEngine();
 let adventure=null,state=save.load(),view='home',pendingMission=null,pendingEventPhoto=null;
@@ -14,15 +14,16 @@ function completed(m){return state.completed.includes(m.id)}
 function currentMission(){return adventure.missions.find(m=>m.id===state.current)||adventure.missions.at(-1)}
 function persist(){save.save(state)}
 function mascot(text, expression='happy'){
- const face = adventure.mascot.expressions?.[expression] || adventure.mascot.emoji || '🦊';
- return `<div class="mascot mood-${expression}"><div class="mascot-face">${face}</div><p><b>${adventure.mascot.name}:</b><br>${text}</p></div>`
+ const faces = adventure.mascot.expressions || {};
+ const face = faces[expression] || adventure.mascot.emoji || '🦊';
+ return `<div class="mascot mood-${expression}"><div class="mascot-face">${face}</div><p><b>${adventure.mascot.name}:</b><br>${text}</p></div>`;
 }
 function nav(){if(!state.started)return'';return `<div class="nav"><button class="${view==='mission'?'active':''}" onclick="FQ.go('mission')">Missione</button><button class="${view==='inventory'?'active':''}" onclick="FQ.go('inventory')">Zaino</button><button class="${view==='achievements'?'active':''}" onclick="FQ.go('achievements')">Trofei</button><button class="${view==='diary'?'active':''}" onclick="FQ.go('diary')">Diario</button><button class="${view==='events'?'active':''}" onclick="FQ.go('events')">Eventi</button><button class="${view==='settings'?'active':''}" onclick="FQ.go('settings')">Opzioni</button></div>`}
-function shell(content){return `<div class="topbar"><div class="brand"><div class="logo">🗝️</div><div><div class="kicker">FamilyQuest Engine 1.2</div><b>${adventure.title}</b></div></div><button class="btn ghost" onclick="FQ.reset()">Reset</button></div>${content}${nav()}`}
+function shell(content){return `<div class="topbar"><div class="brand"><div class="logo">🗝️</div><div><div class="kicker">FamilyQuest Engine 1.2.1</div><b>${adventure.title}</b></div></div><button class="btn ghost" onclick="FQ.reset()">Reset</button></div>${content}${nav()}`}
 function render(){if(!adventure)return;if(state.audioOn){audio.setEnabled(true); if(view==='mission')audio.play('exploration'); else if(view==='settings'){} else if(view==='diary'&&state.completed.length>=adventure.missions.length)audio.play('finale'); else audio.play('main')} if(!state.started){app.innerHTML=home();return} const views={mission,inventory,achievements,diary,events,settings,editor};app.innerHTML=shell((views[view]||mission)())}
 function home(){const pct=Math.round(state.completed.length/adventure.missions.length*100);return `<section class="hero"><div class="card"><div class="hero-icon">🚲✨</div><div class="kicker">${adventure.subtitle}</div><h1 class="title">${adventure.title}</h1><p class="subtitle">Una caccia ai ricordi tra bici, indizi, foto e piccole magie nascoste nel quartiere.</p>${mascot(adventure.mascot.intro)}<div class="progress"><div class="bar" style="width:${pct}%"></div></div><p class="small">${state.completed.length}/${adventure.missions.length} missioni · ${state.xp} XP · Livello ${state.level}</p><button class="btn" onclick="FQ.start()">START</button><button class="btn secondary" onclick="FQ.goStart('settings')">Opzioni audio</button></div></section>`}
-function mission(){const m=currentMission(); if(state.completed.length>=adventure.missions.length)return finale(); if(!state.missionStart[m.id]){state.missionStart[m.id]=Date.now();persist()} const pct=Math.round(state.completed.length/adventure.missions.length*100);return `<section class="grid"><div class="card"><div class="mission-head"><div class="mission-icon">${m.icon}</div><div><div class="kicker">Missione ${m.id}/${adventure.missions.length}</div><h2>${m.title}</h2></div></div><img class="mission-img" src="${m.targetImage}?v=1.2.0"><p class="small">🎯 Dettaglio da trovare e fotografare.</p><div class="story-card">📖 ${m.story}</div>${mascot('${m.lumiLine || 'Guardate con attenzione. I piccoli dettagli sono quelli che quasi tutti ignorano... ma gli esploratori no.'}')}<p class="clue">${m.clue}</p><div class="actions"><button class="btn" onclick="FQ.photo(${m.id})">📷 Scatta foto</button><button class="btn secondary" onclick="FQ.hint(${m.id})">Aiutino</button></div></div><div class="card"><div class="kicker">Avanzamento</div><h3>${pct}% completato</h3><div class="progress"><div class="bar" style="width:${pct}%"></div></div><div class="grid stats" style="margin-top:14px"><div class="stat"><b>${state.completed.length}</b><span>Missioni</span></div><div class="stat"><b>${state.xp}</b><span>XP</span></div><div class="stat"><b>${state.level}</b><span>${levelName(state.level)}</span></div><div class="stat"><b>${Object.keys(state.photos).length}</b><span>Foto salvate leggere</span></div></div></div></section>`}
-function showHint(id){const m=adventure.missions.find(x=>x.id===id);state.assists++;persist();document.body.insertAdjacentHTML('beforeend',`<div class="modal" onclick="if(event.target.className==='modal')this.remove()"><div class="card modal-card"><div class="kicker">Aiutino</div><h2>${m.title}</h2><p>${m.target}</p><img src="${m.hintImage}?v=1.2.0"><button class="btn" onclick="document.querySelector('.modal').remove()">Ho capito</button></div></div>`)}
+function mission(){const m=currentMission(); if(state.completed.length>=adventure.missions.length)return finale(); if(!state.missionStart[m.id]){state.missionStart[m.id]=Date.now();persist()} const pct=Math.round(state.completed.length/adventure.missions.length*100);return `<section class="grid"><div class="card"><div class="mission-head"><div class="mission-icon">${m.icon}</div><div><div class="kicker">Missione ${m.id}/${adventure.missions.length}</div><h2>${m.title}</h2></div></div><img class="mission-img" src="${m.targetImage}?v=1.2.1"><p class="small">🎯 Dettaglio da trovare e fotografare.</p><div class="story-card">📖 ${m.story}</div>${mascot(m.lumiLine || 'Guardate con attenzione. I piccoli dettagli sono quelli che quasi tutti ignorano... ma gli esploratori no.', m.lumiExpression || 'curious')}<p class="clue">${m.clue}</p><div class="actions"><button class="btn" onclick="FQ.photo(${m.id})">📷 Scatta foto</button><button class="btn secondary" onclick="FQ.hint(${m.id})">Aiutino</button></div></div><div class="card"><div class="kicker">Avanzamento</div><h3>${pct}% completato</h3><div class="progress"><div class="bar" style="width:${pct}%"></div></div><div class="grid stats" style="margin-top:14px"><div class="stat"><b>${state.completed.length}</b><span>Missioni</span></div><div class="stat"><b>${state.xp}</b><span>XP</span></div><div class="stat"><b>${state.level}</b><span>${levelName(state.level)}</span></div><div class="stat"><b>${Object.keys(state.photos).length}</b><span>Foto salvate leggere</span></div></div></div></section>`}
+function showHint(id){const m=adventure.missions.find(x=>x.id===id);state.assists++;persist();document.body.insertAdjacentHTML('beforeend',`<div class="modal" onclick="if(event.target.className==='modal')this.remove()"><div class="card modal-card"><div class="kicker">Aiutino</div><h2>${m.title}</h2><p>${m.target}</p><img src="${m.hintImage}?v=1.2.1"><button class="btn" onclick="document.querySelector('.modal').remove()">Ho capito</button></div></div>`)}
 cameraInput.addEventListener('change',async e=>{
  const file=e.target.files[0];
  if(!file)return;
@@ -109,60 +110,10 @@ function events(){
  </section>`
 }
 function settings(){return `<section class="grid"><div class="card"><div class="kicker">Opzioni</div><h2>Audio e scanner</h2>${mascot('Su iPhone l’audio parte solo dopo un tap. La magia funziona meglio quando partite con calma e un bel sorriso.') }<div class="setting-row"><div><b>Audio</b><p class="small">${audio.status}</p></div><div class="switch ${state.audioOn?'on':''}" onclick="FQ.audio()"><i></i></div></div><button class="btn secondary" onclick="FQ.testAudio()">Prova audio</button><div class="setting-row"><div><b>Scanner assistito</b><p class="small">Se acceso, puoi confermare anche con somiglianza bassa. Per gioco reale tienilo spento.</p></div><div class="switch ${state.recognitionMode==='assisted'?'on':''}" onclick="FQ.scanMode()"><i></i></div></div></div></section>`}
-function editor(){
- return `<section class="grid editor-area"><div class="card"><div class="kicker">Editor</div><h2>Crea nuova avventura</h2>
- ${mascot('Dimmi che posto avete scelto e io provo a trasformarlo in una missione. Non sono ancora una vera IA online... ma ho un bel fiuto narrativo!', 'curious')}
- <label>Titolo avventura</label><input id="edTitle" value="Nuova Avventura">
- <label>Luogo</label><input id="edPlace" value="parco, piazza, scuola, bosco...">
- <label>Oggetto da fotografare</label><input id="edTarget" value="cartello, fontanella, ponte...">
- <label>Emozione</label><select id="edMood"><option value="magica">Magica</option><option value="misteriosa">Misteriosa</option><option value="buffa">Buffa</option><option value="dolce">Dolce</option><option value="epica">Epica</option></select>
- <label>Difficoltà</label><select id="edDifficulty"><option value="facile">Facile</option><option value="media">Media</option><option value="difficile">Difficile</option></select>
- <div class="actions"><button class="btn" onclick="FQ.generateDialogue()">Genera dialoghi Lumi</button><button class="btn secondary" onclick="FQ.export()">Genera JSON</button></div>
- <label>Dialogo Lumi</label><textarea id="edDialogue">Premi “Genera dialoghi Lumi”.</textarea>
- <label>Indizio</label><textarea id="edClue">Premi “Genera dialoghi Lumi”.</textarea>
- <div id="exportOut" class="export-box" style="display:none"></div>
- <p class="small">Nota: questa è generazione automatica a template. Per IA vera servirà un piccolo backend sicuro, non GitHub Pages puro.</p>
- </div></section>`
-}
-function generateDialogue(){
- const place=$('#edPlace').value.trim()||'questo luogo';
- const target=$('#edTarget').value.trim()||'un dettaglio nascosto';
- const mood=$('#edMood').value;
- const diff=$('#edDifficulty').value;
- const banks={
-  magica:[
-   `Sento una luce piccola piccola vicino a ${place}. Deve essere uno di quei ricordi che fanno brillare le tasche!`,
-   `C'è qualcosa di speciale nell'aria. Guardate bene: ${target} potrebbe custodire una scintilla.`
-  ],
-  misteriosa:[
-   `Pssst... ${place} nasconde un segreto. Io non tremo, eh... mi si muove solo la coda da sola.`,
-   `Qualcosa ci osserva in silenzio. Cercate ${target}, ma fatelo con occhi da vere esploratrici.`
-  ],
-  buffa:[
-   `Ok, piano ufficiale: niente panico, tanta curiosità e possibilmente nessuno che inciampa nella mia coda.`,
-   `Ho annusato l'avventura vicino a ${place}. O forse era merenda. Comunque cercate ${target}!`
-  ],
-  dolce:[
-   `Alcuni luoghi tengono i ricordi al caldo, come una coperta. ${place} sembra proprio uno di questi.`,
-   `Questo posto ha un cuore tranquillo. Cercate ${target}: potrebbe raccontarvi una storia gentile.`
-  ],
-  epica:[
-   `Esploratrici, il momento è arrivato. ${place} custodisce una prova degna del vostro coraggio.`,
-   `La prossima traccia non è per chi guarda di fretta. Cercate ${target} e conquistate il ricordo.`
-  ]
- };
- const clues={
-  facile:`Andate verso ${place} e cercate ${target}. Quando lo trovate, scattate la foto.`,
-  media:`Cercate il punto dove ${place} sembra nascondere un piccolo segnale. Il vostro obiettivo è ${target}.`,
-  difficile:`Non seguite solo la strada: seguite il dettaglio. Là dove gli altri passano senza guardare, ${target} aspetta voi.`
- };
- const lines=banks[mood];
- $('#edDialogue').value=lines[Math.floor(Math.random()*lines.length)];
- $('#edClue').value=clues[diff];
-}
+function editor(){return `<section class="grid editor-area"><div class="card"><div class="kicker">Editor</div><h2>Crea nuova avventura</h2>${mascot('Qui puoi inventare nuove avventure. Io ti aiuto a trasformare luoghi normali in missioni speciali.') }<label>Titolo</label><input id="edTitle" value="Nuova Avventura"><label>Indizio</label><textarea id="edClue">Cercate il dettaglio nascosto.</textarea><button class="btn" onclick="FQ.export()">Genera JSON</button><div id="exportOut" class="export-box" style="display:none"></div></div></section>`}
 function finale(){if(state.audioOn)audio.play('finale');return `<section class="hero"><div class="card"><div class="hero-icon">🎉</div><div class="kicker">Missione completata</div><h1 class="title">Tesoro sbloccato</h1>${mascot('Avete riunito tutti i ricordi. Ora il tesoro può uscire dal digitale e diventare vero.') }<p class="subtitle">Cercate la busta reale nel posto dove arrivano i messaggi.</p><button class="btn" onclick="FQ.go('diary')">Apri diario</button></div></section>`}
 
-window.FQ={render,start(){state.started=true;persist();view='mission';render()},go(v){view=v;render()},goStart(v){state.started=true;persist();view=v;render()},reset(){if(confirm('Azzerare tutto?')){state=save.reset();audio.stop();render()}},photo(id){pendingMission=id;cameraInput.value='';cameraInput.click()},hint:showHint,complete,eventPhoto,code,audio(){state.audioOn=!state.audioOn;audio.setEnabled(state.audioOn);persist();if(state.audioOn)audio.play(view==='mission'?'exploration':'main');render()},testAudio(){state.audioOn=true;audio.setEnabled(true);persist();audio.play('main');setTimeout(()=>audio.success(),400);render()},scanMode(){state.recognitionMode=state.recognitionMode==='assisted'?'strict':'assisted';persist();render()},generateDialogue,export(){const out=$('#exportOut');out.style.display='block';out.textContent=JSON.stringify({title:$('#edTitle').value,missions:[{place:$('#edPlace').value,target:$('#edTarget').value,clue:$('#edClue').value,lumiLine:$('#edDialogue').value}]},null,2)}};
+window.FQ={render,start(){state.started=true;persist();view='mission';render()},go(v){view=v;render()},goStart(v){state.started=true;persist();view=v;render()},reset(){if(confirm('Azzerare tutto?')){state=save.reset();audio.stop();render()}},photo(id){pendingMission=id;cameraInput.value='';cameraInput.click()},hint:showHint,complete,eventPhoto,code,audio(){state.audioOn=!state.audioOn;audio.setEnabled(state.audioOn);persist();if(state.audioOn)audio.play(view==='mission'?'exploration':'main');render()},testAudio(){state.audioOn=true;audio.setEnabled(true);persist();audio.play('main');setTimeout(()=>audio.success(),400);render()},scanMode(){state.recognitionMode=state.recognitionMode==='assisted'?'strict':'assisted';persist();render()},export(){const out=$('#exportOut');out.style.display='block';out.textContent=JSON.stringify({title:$('#edTitle').value,missions:[{clue:$('#edClue').value}]},null,2)}};
 
-async function init(){adventure=await fetch('adventures/retrone/adventure.json?v=1.2.0').then(r=>r.json());audio.setMap(adventure.audio);if('serviceWorker'in navigator)navigator.serviceWorker.register('./service-worker.js?v=1.2.0').catch(()=>{});for(let i=0;i<32;i++){const p=document.createElement('i');p.className='particle';p.style.left=Math.random()*100+'%';p.style.animationDuration=(7+Math.random()*14)+'s';p.style.animationDelay=(-Math.random()*18)+'s';(document.querySelector('.particles')||(()=>{const w=document.createElement('div');w.className='particles';document.body.appendChild(w);return w})()).appendChild(p)}render()}
+async function init(){adventure=await fetch('adventures/retrone/adventure.json?v=1.2.1').then(r=>r.json());audio.setMap(adventure.audio);if('serviceWorker'in navigator)navigator.serviceWorker.register('./service-worker.js?v=1.2.1').catch(()=>{});for(let i=0;i<32;i++){const p=document.createElement('i');p.className='particle';p.style.left=Math.random()*100+'%';p.style.animationDuration=(7+Math.random()*14)+'s';p.style.animationDelay=(-Math.random()*18)+'s';(document.querySelector('.particles')||(()=>{const w=document.createElement('div');w.className='particles';document.body.appendChild(w);return w})()).appendChild(p)}render()}
 init();

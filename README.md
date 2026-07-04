@@ -1,19 +1,16 @@
-# FamilyQuest Engine 1.2
+# FamilyQuest Engine 1.2.1 Hotfix
 
-## Novità
+Questa versione corregge il blocco della 1.2.
 
-- Lumi ora cambia espressione in base al momento.
+## Fix
+
+- Ripristinato il motore funzionante della 1.1.
+- Aggiunti dialoghi immersivi di Lumi.
+- Aggiunte espressioni diverse di Lumi.
 - Rimossi testi tecnici visibili ai giocatori.
-- Dialoghi missione più immersivi.
-- Editor con generatore automatico di dialoghi/indizi.
-- Base pronta per collegare IA vera in futuro.
+- Evitate modifiche rischiose all'editor.
 
-## IA vera nell'editor
+## Importante
 
-Su GitHub Pages puro non conviene usare una vera API AI, perché la chiave sarebbe pubblica.
-La soluzione corretta sarà una piccola funzione backend sicura, ad esempio:
-- Netlify Functions
-- Vercel Functions
-- Cloudflare Worker
-
-Per ora l'editor usa generazione automatica a template, già utile per creare nuove missioni senza scrivere tutto da zero.
+Carica tutto sopra la versione precedente e fai commit.
+Se vedi ancora schermo vuoto, cancella cache del sito o rimuovi/riaggiungi l'app dalla Home.

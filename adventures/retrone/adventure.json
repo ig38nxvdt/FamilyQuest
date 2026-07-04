@@ -1,5 +1,5 @@
 {
-  "engineVersion": "1.2.0",
+  "engineVersion": "1.2.1",
   "id": "retrone-memories",
   "title": "Retrone Memories",
   "subtitle": "La prima avventura di FamilyQuest",
@@ -242,23 +242,5 @@
     "Foto eventi casuali",
     "Sezione Eventi dedicata",
     "Scatta foto nelle quest secondarie"
-  ],
-  "randomLumiLines": [
-    {
-      "expression": "curious",
-      "text": "Secondo voi gli alberi parlano? Io credo di sì... solo che parlano pianissimo."
-    },
-    {
-      "expression": "surprised",
-      "text": "Aspettate! Ho sentito un rumore... ah no, era solo il mio pancino."
-    },
-    {
-      "expression": "proud",
-      "text": "Promettetemi una cosa: anche quando questa avventura finirà, continuate a guardare il mondo come esploratrici."
-    },
-    {
-      "expression": "happy",
-      "text": "Mi piace quando pedalate così: sembra che il vento vi conosca per nome."
-    }
   ]
 }
