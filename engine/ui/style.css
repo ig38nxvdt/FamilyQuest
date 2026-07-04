@@ -16,3 +16,16 @@ h1,h2,h3,p{margin-top:0}.kicker{color:var(--blue);font-weight:800;letter-spacing
 .modal,.scan,.reward,.random-event{position:fixed;inset:0;display:grid;place-items:center;background:rgba(5,7,22,.90);z-index:90;padding:18px}.modal-card,.scanbox,.reward-card{width:min(620px,100%);max-height:90vh;overflow:auto}.modal-card img{width:100%;border-radius:24px;border:1px solid rgba(255,255,255,.16);margin:12px 0}.scanline{height:12px;border-radius:999px;background:rgba(255,255,255,.14);overflow:hidden;margin:18px 0}.scanline i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--pink),var(--blue));animation:scan 2.2s ease forwards}@keyframes scan{to{width:100%}}
 .result-badge{display:inline-block;padding:8px 12px;border-radius:999px;background:rgba(114,242,184,.16);border:1px solid rgba(114,242,184,.28);color:#a8ffd2;font-weight:900;margin:5px}.fail-badge{background:rgba(255,107,107,.16);border-color:rgba(255,107,107,.3);color:#ffb5b5}.switch{width:66px;height:36px;border-radius:999px;background:rgba(255,255,255,.18);position:relative;border:1px solid rgba(255,255,255,.18);cursor:pointer}.switch i{position:absolute;width:28px;height:28px;border-radius:50%;background:white;left:4px;top:3px;transition:.25s}.switch.on{background:linear-gradient(135deg,var(--pink),var(--blue))}.switch.on i{left:32px}.setting-row{display:flex;justify-content:space-between;align-items:center;gap:14px;padding:14px;border-radius:18px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);margin:10px 0}
 .diary-page{background:rgba(255,255,255,.92);color:#160d2f;border-radius:24px;padding:18px;margin:12px 0}.editor-area textarea,.editor-area input{width:100%;border:1px solid rgba(255,255,255,.16);background:rgba(0,0,0,.25);color:white;border-radius:16px;padding:12px;margin:6px 0;font:inherit}.export-box{white-space:pre-wrap;max-height:280px;overflow:auto;background:rgba(0,0,0,.35);border-radius:16px;padding:12px;border:1px solid rgba(255,255,255,.12);font-size:12px}.album{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}@media(max-width:700px){.album{grid-template-columns:repeat(2,1fr)}}.album img{width:100%;aspect-ratio:1/1;object-fit:cover;border-radius:18px;border:1px solid rgba(255,255,255,.12)}
+
+/* v1.1 Foto Eventi */
+.random-event .actions{justify-content:center}.album .small{line-height:1.35}
+
+/* v1.2 Lumi expressions + editor */
+.mascot{transition:transform .25s ease, box-shadow .25s ease}
+.mascot-face{animation:lumiPop .55s ease}
+@keyframes lumiPop{0%{transform:scale(.7) rotate(-6deg);opacity:.4}70%{transform:scale(1.12)}100%{transform:scale(1)}}
+.mood-surprised{box-shadow:0 0 28px rgba(56,189,248,.18)}
+.mood-scared{box-shadow:0 0 28px rgba(255,133,133,.18)}
+.mood-proud{box-shadow:0 0 28px rgba(255,209,102,.18)}
+.mood-tender{box-shadow:0 0 28px rgba(255,94,168,.18)}
+.editor-area select{width:100%;border:1px solid rgba(255,255,255,.16);background:rgba(0,0,0,.25);color:white;border-radius:16px;padding:12px;margin:6px 0;font:inherit}
