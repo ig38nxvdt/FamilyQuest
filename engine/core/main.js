@@ -5,7 +5,7 @@ import {levelForXP, levelName, achievements as getAchievements} from '../modules
 
 const $=s=>document.querySelector(s);
 const app=$('#app'), cameraInput=$('#cameraInput');
-const save=new SaveManager('familyquest-engine-2-0');
+const save=new SaveManager('familyquest-engine-2-0-1');
 const audio=new AudioManager();
 const recognition=new RecognitionEngine();
 let adventure=null,state=save.load(),view='home',pendingMission=null,pendingEventPhoto=null;
@@ -16,14 +16,14 @@ function persist(){save.save(state)}
 function mascot(text){return `<div class="mascot"><div class="mascot-face">${adventure.mascot.emoji}</div><p><b>${adventure.mascot.name}:</b><br>${text}</p></div>`}
 function nav(){if(!state.started)return'';return `<div class="nav"><button class="${view==='mission'?'active':''}" onclick="FQ.go('mission')">Missione</button><button class="${view==='inventory'?'active':''}" onclick="FQ.go('inventory')">Zaino</button><button class="${view==='achievements'?'active':''}" onclick="FQ.go('achievements')">Trofei</button><button class="${view==='diary'?'active':''}" onclick="FQ.go('diary')">Diario</button><button class="${view==='events'?'active':''}" onclick="FQ.go('events')">Eventi</button><button class="${view==='settings'?'active':''}" onclick="FQ.go('settings')">Opzioni</button></div>`}
 function shell(content){return `<div class="topbar">
- <div class="brand"><div class="logo">🦊</div><div><div class="kicker">FamilyQuest Engine 2.0</div><b>${adventure.title}</b></div></div>
+ <div class="brand"><div class="logo">🦊</div><div><div class="kicker">FamilyQuest Engine 2.0.1</div><b>${adventure.title}</b></div></div>
  <div class="top-actions"><button class="btn secondary mini" onclick="FQ.go('mission')">⬅ Avventura</button><button class="btn secondary mini" onclick="FQ.go('settings')">⚙️</button></div>
 </div>${content}${nav()}`}
 function render(){if(!adventure)return;if(state.audioOn){audio.setEnabled(true); if(view==='mission')audio.play('exploration'); else if(view==='settings'){} else if(view==='diary'&&state.completed.length>=adventure.missions.length)audio.play('finale'); else audio.play('main')} if(!state.introSeen){app.innerHTML=intro();return}if(!state.started){app.innerHTML=home();return} const views={mission,inventory,achievements,diary,events,settings,editor};app.innerHTML=shell((views[view]||mission)())}
-function intro(){return `<section class="hero"><div class="card"><div class="hero-icon">😴</div><div class="kicker">Lumi si sveglia...</div><h1 class="title">Oh!</h1>${mascot('Finalmente siete arrivate... avevo proprio bisogno del vostro aiuto.', 'sleepy')}<button class="btn" onclick="FQ.introDone()">✨ Iniziamo!</button></div></section>`}
+function intro(){return `<section class="hero"><div class="card"><div class="hero-icon">😴</div><div class="kicker">Lumi si sveglia...</div><h1 class="title">Oh!</h1>${mascot('Finalmente siete arrivate... avevo proprio bisogno del vostro aiuto.', 'sleepy')}<button class="btn" onclick="FQ.start()">✨ Iniziamo!</button></div></section>`}
 function home(){const pct=Math.round(state.completed.length/adventure.missions.length*100);return `<section class="hero"><div class="card"><div class="hero-icon">🚲✨</div><div class="kicker">${adventure.subtitle}</div><h1 class="title">${adventure.title}</h1><p class="subtitle">Una caccia ai ricordi tra bici, indizi, foto e piccole magie nascoste nel quartiere.</p>${mascot(adventure.mascot.intro)}<div class="progress"><div class="bar" style="width:${pct}%"></div></div><p class="small">${state.completed.length}/${adventure.missions.length} missioni · ${state.xp} XP · Livello ${state.level}</p><button class="btn" onclick="FQ.start()">START</button><button class="btn secondary" onclick="FQ.goStart('settings')">Opzioni audio</button></div></section>`}
-function mission(){const m=currentMission(); if(state.completed.length>=adventure.missions.length)return finale(); if(!state.missionStart[m.id]){state.missionStart[m.id]=Date.now();persist()} const pct=Math.round(state.completed.length/adventure.missions.length*100);return `<section class="grid"><div class="card"><div class="mission-head"><div class="mission-icon">${m.icon}</div><div><div class="kicker">Missione ${m.id}/${adventure.missions.length}</div><h2>${m.title}</h2></div></div><img class="mission-img" src="${m.targetImage}?v=2.0.0"><p class="small">🎯 Dettaglio da trovare e fotografare.</p><div class="story-card">📖 ${m.story}</div>${mascot('Osservate bene il dettaglio. Lo scanner ora lavora leggero, senza appesantire l’iPhone.')}<p class="clue">${m.clue}</p><div class="actions"><button class="btn" onclick="FQ.photo(${m.id})">📷 Scatta foto</button><button class="btn secondary" onclick="FQ.hint(${m.id})">Aiutino</button></div></div><div class="card"><div class="kicker">Avanzamento</div><h3>${pct}% completato</h3><div class="progress"><div class="bar" style="width:${pct}%"></div></div><div class="grid stats" style="margin-top:14px"><div class="stat"><b>${state.completed.length}</b><span>Missioni</span></div><div class="stat"><b>${state.xp}</b><span>XP</span></div><div class="stat"><b>${state.level}</b><span>${levelName(state.level)}</span></div><div class="stat"><b>${Object.keys(state.photos).length}</b><span>Foto salvate leggere</span></div></div></div></section>`}
-function showHint(id){const m=adventure.missions.find(x=>x.id===id);state.assists++;persist();document.body.insertAdjacentHTML('beforeend',`<div class="modal" onclick="if(event.target.className==='modal')this.remove()"><div class="card modal-card"><div class="kicker">Aiutino</div><h2>${m.title}</h2><p>${m.target}</p><img src="${m.hintImage}?v=2.0.0"><button class="btn" onclick="document.querySelector('.modal').remove()">Ho capito</button></div></div>`)}
+function mission(){const m=currentMission(); if(state.completed.length>=adventure.missions.length)return finale(); if(!state.missionStart[m.id]){state.missionStart[m.id]=Date.now();persist()} const pct=Math.round(state.completed.length/adventure.missions.length*100);return `<section class="grid"><div class="card"><div class="mission-head"><div class="mission-icon">${m.icon}</div><div><div class="kicker">Missione ${m.id}/${adventure.missions.length}</div><h2>${m.title}</h2></div></div><img class="mission-img" src="${m.targetImage}?v=2.0.1"><p class="small">🎯 Dettaglio da trovare e fotografare.</p><div class="story-card">📖 ${m.story}</div>${mascot('Osservate bene il dettaglio. Lo scanner ora lavora leggero, senza appesantire l’iPhone.')}<p class="clue">${m.clue}</p><div class="actions"><button class="btn" onclick="FQ.photo(${m.id})">📷 Scatta foto</button><button class="btn secondary" onclick="FQ.hint(${m.id})">Aiutino</button></div></div><div class="card"><div class="kicker">Avanzamento</div><h3>${pct}% completato</h3><div class="progress"><div class="bar" style="width:${pct}%"></div></div><div class="grid stats" style="margin-top:14px"><div class="stat"><b>${state.completed.length}</b><span>Missioni</span></div><div class="stat"><b>${state.xp}</b><span>XP</span></div><div class="stat"><b>${state.level}</b><span>${levelName(state.level)}</span></div><div class="stat"><b>${Object.keys(state.photos).length}</b><span>Foto salvate leggere</span></div></div></div></section>`}
+function showHint(id){const m=adventure.missions.find(x=>x.id===id);state.assists++;persist();document.body.insertAdjacentHTML('beforeend',`<div class="modal" onclick="if(event.target.className==='modal')this.remove()"><div class="card modal-card"><div class="kicker">Aiutino</div><h2>${m.title}</h2><p>${m.target}</p><img src="${m.hintImage}?v=2.0.1"><button class="btn" onclick="document.querySelector('.modal').remove()">Ho capito</button></div></div>`)}
 cameraInput.addEventListener('change',async e=>{
  const file=e.target.files[0];
  if(!file)return;
@@ -113,7 +113,73 @@ function settings(){return `<section class="grid"><div class="card"><div class="
 function editor(){return `<section class="grid editor-area"><div class="card"><div class="kicker">Editor</div><h2>Crea nuova avventura</h2>${mascot('Base pronta: prossima fase sarà drag & drop completo.') }<label>Titolo</label><input id="edTitle" value="Nuova Avventura"><label>Indizio</label><textarea id="edClue">Cercate il dettaglio nascosto.</textarea><button class="btn" onclick="FQ.export()">Genera JSON</button><div id="exportOut" class="export-box" style="display:none"></div></div></section>`}
 function finale(){if(state.audioOn)audio.play('finale');return `<section class="hero"><div class="card"><div class="hero-icon">🎉</div><div class="kicker">Missione completata</div><h1 class="title">Tesoro sbloccato</h1>${mascot('Avete riunito tutti i ricordi. Ora il tesoro può uscire dal digitale e diventare vero.') }<p class="subtitle">Cercate la busta reale nel posto dove arrivano i messaggi.</p><button class="btn" onclick="FQ.go('diary')">Apri diario</button></div></section>`}
 
-window.FQ={render,start(){state.started=true;persist();view='mission';render()},go(v){view=v;render()},goStart(v){state.started=true;persist();view=v;render()},reset(){if(confirm('Vuoi davvero ricominciare da zero?')){if(confirm('Ultima conferma: perderai missioni, XP e foto eventi.')){state=save.reset();audio.stop();view='home';render()}}},photo(id){pendingMission=id;cameraInput.value='';cameraInput.click()},hint:showHint,complete,eventPhoto,code,audio(){state.audioOn=!state.audioOn;audio.setEnabled(state.audioOn);persist();if(state.audioOn)audio.play(view==='mission'?'exploration':'main');render()},testAudio(){state.audioOn=true;audio.setEnabled(true);persist();audio.play('main');setTimeout(()=>audio.success(),400);render()},scanMode(){state.recognitionMode=state.recognitionMode==='assisted'?'strict':'assisted';persist();render()},export(){const out=$('#exportOut');out.style.display='block';out.textContent=JSON.stringify({title:$('#edTitle').value,missions:[{clue:$('#edClue').value}]},null,2)}};
+window.FQ={
+ render,
+ introDone(){
+   state.introSeen=true;
+   state.started=true;
+   view='mission';
+   persist();
+   render();
+ },
+ start(){
+   state.introSeen=true;
+   state.started=true;
+   view='mission';
+   persist();
+   render();
+ },
+ go(v){
+   if(!state.started && v!=='settings'){state.started=true}
+   view=v;
+   persist();
+   render();
+ },
+ goStart(v){
+   state.introSeen=true;
+   state.started=true;
+   view=v;
+   persist();
+   render();
+ },
+ reset(){
+   if(confirm('Vuoi davvero ricominciare da zero?')){
+     if(confirm('Ultima conferma: perderai missioni, XP e foto eventi.')){
+       state=save.reset();
+       audio.stop();
+       view='home';
+       render();
+     }
+   }
+ },
+ photo(id){pendingMission=id;cameraInput.value='';cameraInput.click()},
+ hint:showHint,
+ complete,
+ eventPhoto,
+ code,
+ audio(){
+   state.audioOn=!state.audioOn;
+   audio.setEnabled(state.audioOn);
+   persist();
+   if(state.audioOn)audio.play(view==='mission'?'exploration':'main');
+   render();
+ },
+ testAudio(){
+   state.audioOn=true;
+   audio.setEnabled(true);
+   persist();
+   audio.play('main');
+   setTimeout(()=>audio.success(),400);
+   render();
+ },
+ scanMode(){
+   state.recognitionMode=state.recognitionMode==='assisted'?'strict':'assisted';
+   persist();
+   render();
+ },
+ generate,
+ export:editorExport
+};
 
-async function init(){adventure=await fetch('adventures/retrone/adventure.json?v=2.0.0').then(r=>r.json());audio.setMap(adventure.audio);if('serviceWorker'in navigator)navigator.serviceWorker.register('./service-worker.js?v=2.0.0').catch(()=>{});for(let i=0;i<32;i++){const p=document.createElement('i');p.className='particle';p.style.left=Math.random()*100+'%';p.style.animationDuration=(7+Math.random()*14)+'s';p.style.animationDelay=(-Math.random()*18)+'s';(document.querySelector('.particles')||(()=>{const w=document.createElement('div');w.className='particles';document.body.appendChild(w);return w})()).appendChild(p)}render()}
+async function init(){adventure=await fetch('adventures/retrone/adventure.json?v=2.0.1').then(r=>r.json());audio.setMap(adventure.audio);if('serviceWorker'in navigator)navigator.serviceWorker.register('./service-worker.js?v=2.0.1').catch(()=>{});for(let i=0;i<32;i++){const p=document.createElement('i');p.className='particle';p.style.left=Math.random()*100+'%';p.style.animationDuration=(7+Math.random()*14)+'s';p.style.animationDelay=(-Math.random()*18)+'s';(document.querySelector('.particles')||(()=>{const w=document.createElement('div');w.className='particles';document.body.appendChild(w);return w})()).appendChild(p)}render()}
 init();

@@ -1,15 +1,9 @@
-# FamilyQuest Engine 2.0
+# FamilyQuest Engine 2.0.1 Hotfix
 
-Versione UX / struttura più stabile.
+Fix:
+- Il pulsante “Iniziamo!” ora entra correttamente nell’avventura.
+- Intro e Start sono più robusti.
+- Cache aggiornata a 2.0.1.
 
-## Novità
-- Intro cinematografica con Lumi
-- Barra superiore sempre presente
-- Tasto “Avventura” per tornare al gioco dalle Opzioni
-- Opzioni sempre raggiungibili
-- Reset protetto con doppia conferma
-- Base stabile della 1.1 mantenuta
-
-## Installazione
-Carica tutto nella root del repository GitHub Pages.
-Su iPhone rimuovi la vecchia icona dalla Home e aggiungila di nuovo.
+Carica tutto nella root GitHub e fai commit.
+Su iPhone rimuovi e riaggiungi l’app dalla Home.
