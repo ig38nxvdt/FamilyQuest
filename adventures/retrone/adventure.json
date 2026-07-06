@@ -1,5 +1,5 @@
 {
-  "engineVersion": "2.0.2",
+  "engineVersion": "2.0.3",
   "id": "retrone-memories",
   "title": "Retrone Memories",
   "subtitle": "La prima avventura di FamilyQuest",
@@ -234,5 +234,8 @@
     "Sezione Eventi dedicata",
     "Scatta foto nelle quest secondarie"
   ],
-  "engineName": "FamilyQuest Engine 2.0.2 Stable"
+  "engineName": "FamilyQuest Engine 2.0.2 Stable",
+  "removed": [
+    "Editor rimosso per semplificare l’esperienza di gioco"
+  ]
 }

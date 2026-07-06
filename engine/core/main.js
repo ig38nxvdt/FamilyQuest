@@ -5,7 +5,7 @@ import {levelForXP, levelName, achievements as getAchievements} from '../modules
 
 const app=document.querySelector('#app');
 const cameraInput=document.querySelector('#cameraInput');
-const save=new SaveManager('familyquest-engine-2-0-2');
+const save=new SaveManager('familyquest-engine-2-0-3');
 const audio=new AudioManager();
 const recognition=new RecognitionEngine();
 
@@ -25,7 +25,7 @@ function mascot(text, exp='happy'){
 }
 function topbar(){
   return `<div class="topbar">
-    <div class="brand"><div class="logo">🦊</div><div><div class="kicker">FamilyQuest 2.0.2</div><b>${adventure.title}</b></div></div>
+    <div class="brand"><div class="logo">🦊</div><div><div class="kicker">FamilyQuest 2.0.3</div><b>${adventure.title}</b></div></div>
     <div class="top-actions">
       <button class="btn secondary mini" data-go="mission">⬅ Avventura</button>
       <button class="btn secondary mini" data-go="settings">⚙️</button>
@@ -34,7 +34,7 @@ function topbar(){
 }
 function nav(){
   if(!state.started) return '';
-  const items=[['mission','Missione'],['inventory','Zaino'],['achievements','Trofei'],['diary','Diario'],['events','Eventi'],['editor','Editor']];
+  const items=[['mission','Missione'],['inventory','Zaino'],['achievements','Trofei'],['diary','Diario'],['events','Eventi']];
   return `<div class="nav">${items.map(([v,t])=>`<button class="${view===v?'active':''}" data-go="${v}">${t}</button>`).join('')}</div>`;
 }
 function shell(content){ return `${topbar()}${content}${nav()}`; }
@@ -47,7 +47,7 @@ function render(){
     else if(view==='diary' && state.completed.length>=adventure.missions.length) audio.play('finale');
     else audio.play('main');
   }
-  const views={intro,home,mission,inventory,achievements,diary,events,settings,editor};
+  const views={intro,home,mission,inventory,achievements,diary,events,settings};
   app.innerHTML = (view==='intro' || view==='home') ? views[view]() : shell((views[view]||mission)());
 }
 
@@ -85,7 +85,7 @@ function mission(){
   return `<section class="grid">
     <div class="card">
       <div class="mission-head"><div class="mission-icon">${m.icon}</div><div><div class="kicker">Capitolo ${m.id}/${adventure.missions.length}</div><h2>${m.title}</h2></div></div>
-      <img class="mission-img" src="${m.targetImage}?v=2.0.2">
+      <img class="mission-img" src="${m.targetImage}?v=2.0.3">
       <p class="small">🎯 Dettaglio da trovare e fotografare.</p>
       <div class="story-card">📖 ${m.story}</div>
       ${mascot(m.lumiLine || 'Guardate con attenzione. Il ricordo è vicino.', m.lumiExpression || 'curious')}
@@ -110,7 +110,7 @@ function showHint(id){
   state.assists++; persist();
   document.body.insertAdjacentHTML('beforeend',`<div class="modal" data-close-modal="1"><div class="card modal-card">
     <div class="kicker">Aiutino</div><h2>${m.title}</h2><p>${m.target}</p>
-    <img src="${m.hintImage}?v=2.0.2">
+    <img src="${m.hintImage}?v=2.0.3">
     <button class="btn" data-close="1">Ho capito</button>
   </div></div>`);
 }
@@ -213,19 +213,6 @@ function events(){
 function settings(){
   return `<section class="grid"><div class="card"><div class="kicker">Opzioni</div><h2>Audio e scanner</h2>${mascot('La magia funziona meglio quando partite con calma e un bel sorriso.', 'happy')}<div class="setting-row"><div><b>Audio</b><p class="small">${audio.status}</p></div><div class="switch ${state.audioOn?'on':''}" id="audioToggle"><i></i></div></div><button class="btn secondary" id="testAudio">Prova audio</button><div class="setting-row"><div><b>Scanner assistito</b><p class="small">Se acceso, potete confermare anche quando Lumi non è sicurissimo.</p></div><div class="switch ${state.recognitionMode==='assisted'?'on':''}" id="scanToggle"><i></i></div></div><div class="card"><h3>Zona reset</h3><p class="small">Usala solo se vuoi ricominciare da zero.</p><button class="btn danger" id="resetBtn">Resetta avventura</button></div></div></section>`;
 }
-function editor(){
-  return `<section class="grid editor-area"><div class="card"><div class="kicker">Editor</div><h2>Crea nuova avventura</h2>${mascot('Dimmi un luogo e io provo a trasformarlo in una missione. Ho un bel fiuto narrativo!', 'curious')}<label>Titolo</label><input id="edTitle" value="Nuova Avventura"><label>Luogo</label><input id="edPlace" value="parco"><label>Oggetto da fotografare</label><input id="edTarget" value="cartello"><label>Emozione</label><select id="edMood"><option value="magica">Magica</option><option value="misteriosa">Misteriosa</option><option value="buffa">Buffa</option><option value="dolce">Dolce</option><option value="epica">Epica</option></select><div class="actions"><button class="btn" id="genBtn">Genera dialoghi Lumi</button><button class="btn secondary" id="exportBtn">Genera JSON</button></div><label>Dialogo Lumi</label><textarea id="edDialogue">Premi genera.</textarea><label>Indizio</label><textarea id="edClue">Premi genera.</textarea><div id="exportOut" class="export-box" style="display:none"></div></div></section>`;
-}
-function generate(){
-  const place=document.querySelector('#edPlace').value||'questo posto', target=document.querySelector('#edTarget').value||'un dettaglio', mood=document.querySelector('#edMood').value;
-  const lines={magica:`Sento una luce piccola vicino a ${place}. ${target} potrebbe custodire una scintilla.`,misteriosa:`Pssst... ${place} nasconde un segreto. Cercate ${target} con occhi da esploratrici.`,buffa:`Ho annusato l'avventura vicino a ${place}. O forse era merenda. Comunque cercate ${target}!`,dolce:`Questo posto ha un cuore tranquillo. Cercate ${target}: potrebbe raccontarvi una storia gentile.`,epica:`Esploratrici, il momento è arrivato. ${place} custodisce una prova degna del vostro coraggio.`};
-  document.querySelector('#edDialogue').value=lines[mood];
-  document.querySelector('#edClue').value=`Cercate ${target} nei pressi di ${place}. Quando lo trovate, scattate la foto.`;
-}
-function editorExport(){
-  const out=document.querySelector('#exportOut'); out.style.display='block';
-  out.textContent=JSON.stringify({title:document.querySelector('#edTitle').value,missions:[{place:document.querySelector('#edPlace').value,target:document.querySelector('#edTarget').value,clue:document.querySelector('#edClue').value,lumiLine:document.querySelector('#edDialogue').value}]},null,2);
-}
 function finale(){
   if(state.audioOn) audio.play('finale');
   return `<section class="hero"><div class="card"><div class="hero-icon">🎉</div><div class="kicker">Missione completata</div><h1 class="title">Tesoro sbloccato</h1>${mascot('Avete riunito tutti i ricordi. Ora il tesoro può uscire dal digitale e diventare vero.', 'party')}<p class="subtitle">Cercate la busta reale nel posto dove arrivano i messaggi.</p><button class="btn" data-go="diary">Apri diario</button></div></section>`;
@@ -261,9 +248,7 @@ document.addEventListener('click',e=>{
   if(t.id==='testAudio'){ testAudio(); return; }
   if(t.id==='scanToggle'){ toggleScan(); return; }
   if(t.id==='resetBtn'){ resetAll(); return; }
-  if(t.id==='genBtn'){ generate(); return; }
-  if(t.id==='exportBtn'){ editorExport(); return; }
-});
+  });
 document.addEventListener('click',e=>{ if(e.target.className==='modal') e.target.remove(); });
 cameraInput.addEventListener('change',async e=>{
   const file=e.target.files[0]; if(!file) return;
@@ -273,9 +258,9 @@ cameraInput.addEventListener('change',async e=>{
 });
 
 async function init(){
-  adventure=await fetch('adventures/retrone/adventure.json?v=2.0.2').then(r=>r.json());
+  adventure=await fetch('adventures/retrone/adventure.json?v=2.0.3').then(r=>r.json());
   audio.setMap(adventure.audio);
-  if('serviceWorker' in navigator) navigator.serviceWorker.register('./service-worker.js?v=2.0.2').catch(()=>{});
+  if('serviceWorker' in navigator) navigator.serviceWorker.register('./service-worker.js?v=2.0.3').catch(()=>{});
   const wrap=document.createElement('div'); wrap.className='particles';
   for(let i=0;i<32;i++){const p=document.createElement('i');p.className='particle';p.style.left=Math.random()*100+'%';p.style.animationDuration=(7+Math.random()*14)+'s';p.style.animationDelay=(-Math.random()*18)+'s';wrap.appendChild(p)}
   document.body.appendChild(wrap);

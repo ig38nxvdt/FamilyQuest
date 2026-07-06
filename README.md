@@ -1,13 +1,21 @@
-# FamilyQuest Engine 2.0.2 Stable
+# FamilyQuest Engine 2.0.3
 
-Questa versione risolve il blocco della schermata iniziale.
+## Modifica
 
-## Fix
-- Il tasto Iniziamo usa eventi globali stabili.
-- Niente dipendenza da funzioni inline fragili.
-- Barra superiore e opzioni restano.
-- Reset con doppia conferma.
+- Editor rimosso.
+- Tutto il resto resta uguale alla 2.0.2 stabile:
+  - missioni
+  - audio
+  - scanner
+  - Lumi
+  - inventario
+  - diario
+  - eventi casuali
+  - foto eventi
+  - opzioni
+  - reset protetto
 
-## Istruzioni
-Carica tutto su GitHub nella root.
+## Pubblicazione
+
+Carica tutto nella root del repository GitHub Pages.
 Su iPhone rimuovi la vecchia icona dalla Home e aggiungila di nuovo.
