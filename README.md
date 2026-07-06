@@ -1,16 +1,15 @@
-# FamilyQuest Engine 1.2.1 Hotfix
+# FamilyQuest Engine 2.0
 
-Questa versione corregge il blocco della 1.2.
+Versione UX / struttura più stabile.
 
-## Fix
+## Novità
+- Intro cinematografica con Lumi
+- Barra superiore sempre presente
+- Tasto “Avventura” per tornare al gioco dalle Opzioni
+- Opzioni sempre raggiungibili
+- Reset protetto con doppia conferma
+- Base stabile della 1.1 mantenuta
 
-- Ripristinato il motore funzionante della 1.1.
-- Aggiunti dialoghi immersivi di Lumi.
-- Aggiunte espressioni diverse di Lumi.
-- Rimossi testi tecnici visibili ai giocatori.
-- Evitate modifiche rischiose all'editor.
-
-## Importante
-
-Carica tutto sopra la versione precedente e fai commit.
-Se vedi ancora schermo vuoto, cancella cache del sito o rimuovi/riaggiungi l'app dalla Home.
+## Installazione
+Carica tutto nella root del repository GitHub Pages.
+Su iPhone rimuovi la vecchia icona dalla Home e aggiungila di nuovo.
