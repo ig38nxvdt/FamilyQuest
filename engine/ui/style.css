@@ -20,9 +20,8 @@ h1,h2,h3,p{margin-top:0}.kicker{color:var(--blue);font-weight:800;letter-spacing
 /* v1.1 Foto Eventi */
 .random-event .actions{justify-content:center}.album .small{line-height:1.35}
 
-/* FamilyQuest Engine 2.0 UX */
+/* 2.0.2 stable navigation */
 .topbar{position:sticky;top:0;z-index:25;padding:8px;border:1px solid rgba(255,255,255,.12);background:rgba(8,8,24,.68);backdrop-filter:blur(18px);border-radius:22px}
 .top-actions{display:flex;gap:6px;align-items:center}
 .mini{padding:10px 12px!important;border-radius:14px!important;font-size:14px!important}
 .btn.danger{background:rgba(255,80,100,.16)!important;color:#ffd3dc!important;border:1px solid rgba(255,80,100,.25)!important;box-shadow:none!important}
-.app{padding-top:calc(10px + env(safe-area-inset-top))}

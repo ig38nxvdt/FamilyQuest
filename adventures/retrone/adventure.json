@@ -1,12 +1,22 @@
 {
-  "engineVersion": "2.0.1",
+  "engineVersion": "2.0.2",
   "id": "retrone-memories",
   "title": "Retrone Memories",
   "subtitle": "La prima avventura di FamilyQuest",
   "mascot": {
     "name": "Lumi",
     "emoji": "🦊",
-    "intro": "Oh! Finalmente siete arrivate... avevo proprio bisogno del vostro aiuto."
+    "intro": "Oh! Finalmente siete arrivate... avevo proprio bisogno del vostro aiuto.",
+    "expressions": {
+      "happy": "🦊",
+      "curious": "🤔",
+      "surprised": "😮",
+      "scared": "😳",
+      "proud": "😎",
+      "party": "🥳",
+      "tender": "🥹",
+      "sleepy": "😴"
+    }
   },
   "audio": {
     "main": "assets/audio/main-theme.mp3",
@@ -70,7 +80,9 @@
       "item": "Mappa dei Ricordi",
       "secret": "R",
       "story": "Il Diario dei Ricordi si è riaperto. La prima pagina profuma di scuola, mattine e zaini pieni di mondi.",
-      "clue": "Cercate il luogo dove tante mattine sono iniziate con zaini, risate e campanelle. La prima chiave dorme accanto a un simbolo colorato."
+      "clue": "Cercate il luogo dove tante mattine sono iniziate con zaini, risate e campanelle. La prima chiave dorme accanto a un simbolo colorato.",
+      "lumiExpression": "happy",
+      "lumiLine": "Qui iniziano tantissime avventure ogni mattina. Ma oggi ne inizierà una ancora più speciale... riuscite a trovare il piccolo simbolo che sto cercando?"
     },
     {
       "id": 2,
@@ -86,7 +98,9 @@
       "item": "Corda del Ponte",
       "secret": "E",
       "story": "Una pagina azzurra vibra vicino all'acqua. Il ponte custodisce il passaggio tra ciò che era e ciò che sarà.",
-      "clue": "Trovate il passaggio che unisce due rive. Molti lo attraversano, pochi osservano il suo piccolo segno nascosto."
+      "clue": "Trovate il passaggio che unisce due rive. Molti lo attraversano, pochi osservano il suo piccolo segno nascosto.",
+      "lumiExpression": "proud",
+      "lumiLine": "Questo ponte collega due rive... ma oggi collega anche il passato al futuro. Attraversiamolo insieme!"
     },
     {
       "id": 3,
@@ -102,7 +116,9 @@
       "item": "Bussola dell'Anello",
       "secret": "T",
       "story": "Il diario mostra una freccia: non indica solo una strada, ma la scelta di continuare.",
-      "clue": "Lasciando alle spalle il parco, cercate il segno che indica una strada nuova."
+      "clue": "Lasciando alle spalle il parco, cercate il segno che indica una strada nuova.",
+      "lumiExpression": "curious",
+      "lumiLine": "Le frecce sono buffe: indicano sempre la strada, ma non possono scegliere al posto nostro. Tocca a voi!"
     },
     {
       "id": 4,
@@ -118,7 +134,9 @@
       "item": "Medaglia dell'Amicizia",
       "secret": "R",
       "story": "Qui la memoria diventa morbida, fedele, con quattro zampe e occhi buoni.",
-      "clue": "C'è un segnale che indica la strada verso un ricordo speciale della vostra famiglia."
+      "clue": "C'è un segnale che indica la strada verso un ricordo speciale della vostra famiglia.",
+      "lumiExpression": "tender",
+      "lumiLine": "Qui qualcuno aspettava una famiglia... e un giorno quella famiglia siete diventate voi. Questo ricordo vale tantissimo."
     },
     {
       "id": 5,
@@ -134,7 +152,9 @@
       "item": "Lanterna del Passaggio",
       "secret": "O",
       "story": "Il tunnel respira piano. Non fa paura: chiede solo coraggio e occhi attenti.",
-      "clue": "Cercate l'ingresso dove la strada passa sopra e il sentiero sparisce sotto. Prima di entrare, un simbolo avverte i viaggiatori."
+      "clue": "Cercate l'ingresso dove la strada passa sopra e il sentiero sparisce sotto. Prima di entrare, un simbolo avverte i viaggiatori.",
+      "lumiExpression": "scared",
+      "lumiLine": "Pssst... lo sentite anche voi? Credo che il vento stia cercando di dirmi qualcosa... oppure ho solo le orecchie troppo grandi."
     },
     {
       "id": 6,
@@ -150,7 +170,9 @@
       "item": "Seme del Rispetto",
       "secret": "N",
       "story": "Una pagina verde sussurra: proteggere un luogo è il modo più bello per farne parte.",
-      "clue": "C'è un guardiano silenzioso che non parla, ma ha lasciato un messaggio importante per tutti."
+      "clue": "C'è un guardiano silenzioso che non parla, ma ha lasciato un messaggio importante per tutti.",
+      "lumiExpression": "proud",
+      "lumiLine": "I veri esploratori lasciano il mondo un pochino più bello di come l'hanno trovato."
     },
     {
       "id": 7,
@@ -166,7 +188,9 @@
       "item": "Goccia d'Energia",
       "secret": "E",
       "story": "La sorgente canta piano. Prima di proseguire, anche le eroine bevono e sorridono.",
-      "clue": "Cercate la piccola sorgente che disseta chi attraversa il parco. Fotografatela, poi bevete un sorso d'acqua."
+      "clue": "Cercate la piccola sorgente che disseta chi attraversa il parco. Fotografatela, poi bevete un sorso d'acqua.",
+      "lumiExpression": "happy",
+      "lumiLine": "Pausa! Anche le code soffici come la mia hanno bisogno di bere ogni tanto."
     },
     {
       "id": 8,
@@ -182,7 +206,9 @@
       "item": "Pagina Curiosa",
       "secret": "★",
       "story": "Le storie non stanno ferme: aspettano qualcuno che le apra, anche dentro un vecchio frigo.",
-      "clue": "Cercate un oggetto insolito: un frigo che non conserva il freddo, ma parole, copertine e mondi interi."
+      "clue": "Cercate un oggetto insolito: un frigo che non conserva il freddo, ma parole, copertine e mondi interi.",
+      "lumiExpression": "surprised",
+      "lumiLine": "Che strano posto! Un frigorifero pieno di storie invece che di gelati! Mi piace tantissimo!"
     },
     {
       "id": 9,
@@ -198,15 +224,15 @@
       "item": "Chiave d'Argento",
       "secret": "LUMI",
       "story": "L'ultima pagina porta a casa. Perché ogni avventura vera sa sempre dove tornare.",
-      "clue": "Cercate il posto dove ogni giorno arrivano messaggi. Lì vi aspetta l'ultimo segnale."
+      "clue": "Cercate il posto dove ogni giorno arrivano messaggi. Lì vi aspetta l'ultimo segnale.",
+      "lumiExpression": "tender",
+      "lumiLine": "Sento un profumo familiare... credo che il nostro viaggio stia per finire. Ma ho la sensazione che ci aspetti una sorpresa..."
     }
   ],
   "newFeatures": [
-    "Intro cinematografica",
-    "Barra superiore sempre presente",
-    "Tasto Avventura",
-    "Reset protetto",
-    "UX migliorata"
+    "Foto eventi casuali",
+    "Sezione Eventi dedicata",
+    "Scatta foto nelle quest secondarie"
   ],
-  "engineName": "FamilyQuest Engine 2.0"
+  "engineName": "FamilyQuest Engine 2.0.2 Stable"
 }

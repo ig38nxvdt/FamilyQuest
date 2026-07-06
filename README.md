@@ -1,9 +1,13 @@
-# FamilyQuest Engine 2.0.1 Hotfix
+# FamilyQuest Engine 2.0.2 Stable
 
-Fix:
-- Il pulsante “Iniziamo!” ora entra correttamente nell’avventura.
-- Intro e Start sono più robusti.
-- Cache aggiornata a 2.0.1.
+Questa versione risolve il blocco della schermata iniziale.
 
-Carica tutto nella root GitHub e fai commit.
-Su iPhone rimuovi e riaggiungi l’app dalla Home.
+## Fix
+- Il tasto Iniziamo usa eventi globali stabili.
+- Niente dipendenza da funzioni inline fragili.
+- Barra superiore e opzioni restano.
+- Reset con doppia conferma.
+
+## Istruzioni
+Carica tutto su GitHub nella root.
+Su iPhone rimuovi la vecchia icona dalla Home e aggiungila di nuovo.
