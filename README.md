@@ -1,21 +1,13 @@
-# FamilyQuest Engine 2.0.3
+# FamilyQuest Engine 2.0.4
 
-## Modifica
+Editor rimosso completamente:
+- barra di navigazione
+- funzione editor
+- handler dei pulsanti
+- redirect di sicurezza
 
-- Editor rimosso.
-- Tutto il resto resta uguale alla 2.0.2 stabile:
-  - missioni
-  - audio
-  - scanner
-  - Lumi
-  - inventario
-  - diario
-  - eventi casuali
-  - foto eventi
-  - opzioni
-  - reset protetto
-
-## Pubblicazione
-
-Carica tutto nella root del repository GitHub Pages.
-Su iPhone rimuovi la vecchia icona dalla Home e aggiungila di nuovo.
+Dopo il commit su iPhone:
+1. Rimuovi l’app dalla schermata Home.
+2. Apri il sito in Safari.
+3. Ricarica.
+4. Aggiungi di nuovo alla Home.

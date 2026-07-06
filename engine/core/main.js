@@ -1,3 +1,4 @@
+/* FamilyQuest Engine 2.0.4 - editor removed hard */
 import {SaveManager} from '../modules/SaveManager.js';
 import {AudioManager} from '../modules/AudioManager.js';
 import {RecognitionEngine} from '../modules/RecognitionEngine.js';
@@ -5,7 +6,7 @@ import {levelForXP, levelName, achievements as getAchievements} from '../modules
 
 const app=document.querySelector('#app');
 const cameraInput=document.querySelector('#cameraInput');
-const save=new SaveManager('familyquest-engine-2-0-3');
+const save=new SaveManager('familyquest-engine-2-0-4');
 const audio=new AudioManager();
 const recognition=new RecognitionEngine();
 
@@ -25,7 +26,7 @@ function mascot(text, exp='happy'){
 }
 function topbar(){
   return `<div class="topbar">
-    <div class="brand"><div class="logo">🦊</div><div><div class="kicker">FamilyQuest 2.0.3</div><b>${adventure.title}</b></div></div>
+    <div class="brand"><div class="logo">🦊</div><div><div class="kicker">FamilyQuest 2.0.4</div><b>${adventure.title}</b></div></div>
     <div class="top-actions">
       <button class="btn secondary mini" data-go="mission">⬅ Avventura</button>
       <button class="btn secondary mini" data-go="settings">⚙️</button>
@@ -85,7 +86,7 @@ function mission(){
   return `<section class="grid">
     <div class="card">
       <div class="mission-head"><div class="mission-icon">${m.icon}</div><div><div class="kicker">Capitolo ${m.id}/${adventure.missions.length}</div><h2>${m.title}</h2></div></div>
-      <img class="mission-img" src="${m.targetImage}?v=2.0.3">
+      <img class="mission-img" src="${m.targetImage}?v=2.0.4">
       <p class="small">🎯 Dettaglio da trovare e fotografare.</p>
       <div class="story-card">📖 ${m.story}</div>
       ${mascot(m.lumiLine || 'Guardate con attenzione. Il ricordo è vicino.', m.lumiExpression || 'curious')}
@@ -110,7 +111,7 @@ function showHint(id){
   state.assists++; persist();
   document.body.insertAdjacentHTML('beforeend',`<div class="modal" data-close-modal="1"><div class="card modal-card">
     <div class="kicker">Aiutino</div><h2>${m.title}</h2><p>${m.target}</p>
-    <img src="${m.hintImage}?v=2.0.3">
+    <img src="${m.hintImage}?v=2.0.4">
     <button class="btn" data-close="1">Ho capito</button>
   </div></div>`);
 }
@@ -217,7 +218,7 @@ function finale(){
   if(state.audioOn) audio.play('finale');
   return `<section class="hero"><div class="card"><div class="hero-icon">🎉</div><div class="kicker">Missione completata</div><h1 class="title">Tesoro sbloccato</h1>${mascot('Avete riunito tutti i ricordi. Ora il tesoro può uscire dal digitale e diventare vero.', 'party')}<p class="subtitle">Cercate la busta reale nel posto dove arrivano i messaggi.</p><button class="btn" data-go="diary">Apri diario</button></div></section>`;
 }
-function go(v){ if(!state.started && v!=='settings') state.started=true; view=v; persist(); render(); }
+function go(v){ if(v==='editor') v='mission';  if(!state.started && v!=='settings') state.started=true; view=v; persist(); render(); }
 function resetAll(){
   if(confirm('Vuoi davvero ricominciare da zero?')){
     if(confirm('Ultima conferma: perderai missioni, XP e foto eventi.')){
@@ -258,9 +259,9 @@ cameraInput.addEventListener('change',async e=>{
 });
 
 async function init(){
-  adventure=await fetch('adventures/retrone/adventure.json?v=2.0.3').then(r=>r.json());
+  adventure=await fetch('adventures/retrone/adventure.json?v=2.0.4').then(r=>r.json());
   audio.setMap(adventure.audio);
-  if('serviceWorker' in navigator) navigator.serviceWorker.register('./service-worker.js?v=2.0.3').catch(()=>{});
+  if('serviceWorker' in navigator) navigator.serviceWorker.register('./service-worker.js?v=2.0.4').catch(()=>{});
   const wrap=document.createElement('div'); wrap.className='particles';
   for(let i=0;i<32;i++){const p=document.createElement('i');p.className='particle';p.style.left=Math.random()*100+'%';p.style.animationDuration=(7+Math.random()*14)+'s';p.style.animationDelay=(-Math.random()*18)+'s';wrap.appendChild(p)}
   document.body.appendChild(wrap);

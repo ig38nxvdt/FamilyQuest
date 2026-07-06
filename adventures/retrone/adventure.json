@@ -1,5 +1,5 @@
 {
-  "engineVersion": "2.0.3",
+  "engineVersion": "2.0.4",
   "id": "retrone-memories",
   "title": "Retrone Memories",
   "subtitle": "La prima avventura di FamilyQuest",
@@ -236,6 +236,6 @@
   ],
   "engineName": "FamilyQuest Engine 2.0.2 Stable",
   "removed": [
-    "Editor rimosso per semplificare l’esperienza di gioco"
+    "Editor rimosso completamente"
   ]
 }
